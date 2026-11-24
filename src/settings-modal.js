@@ -6,6 +6,16 @@ import { normalizeAccountName } from './text-utils.js';
 import { createSyncSettingsPanel } from './sync-settings-panel.js';
 import { VIETQR_IMAGE_ORIGINS } from './qr-print-card.js';
 
+const PRIVACY_URL = 'https://qaqeqe0.github.io/so-tai-khoan-qr-privacy/';
+
+/** "Phiên bản x.y.z · Chính sách quyền riêng tư" at the bottom of Settings. */
+function aboutLine() {
+  const version = typeof chrome !== 'undefined' && chrome.runtime?.getManifest ? chrome.runtime.getManifest().version : '';
+  return el('p', { class: 'about-line' },
+    version ? `Sổ tài khoản QR chuyển khoản · phiên bản ${version} · ` : 'Sổ tài khoản QR chuyển khoản · ',
+    el('a', { href: PRIVACY_URL, target: '_blank', rel: 'noopener noreferrer' }, 'Chính sách quyền riêng tư'));
+}
+
 const lines = (text) => [...new Set(String(text).split('\n').map((s) => s.trim()).filter(Boolean))];
 
 /**
@@ -68,6 +78,7 @@ export function openSettingsModal(settings, { onSave, onExport, onImport, isPopu
         fileInput)),
     syncSlot,
     el('p', { class: 'field-hint' }, 'Dữ liệu lưu trong trình duyệt này và chỉ gửi tới Google Sheet / Drive / VietQR.io khi bạn bật ở trên. Mã QR được tạo offline (trừ khi dùng ảnh thẻ từ img.vietqr.io).'),
+    aboutLine(),
   );
   createSyncSettingsPanel({ isPopup, onOpenTab })
     .then((panel) => syncSlot.replaceChildren(panel))

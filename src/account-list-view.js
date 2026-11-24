@@ -2,6 +2,7 @@
 import { bankColor, findBankByBin, bankLabel } from './bank-list.js';
 import { matchesQuery } from './text-utils.js';
 import { el, iconButton, ICONS, bankLogo } from './ui-helpers.js';
+import { firstRunHints } from './empty-state-hints.js';
 
 export const FILTER_ALL = '__all__';
 export const FILTER_FAVORITE = '__favorite__';
@@ -83,7 +84,8 @@ export function renderAccountList(container, accounts, handlers, { hasAny, query
     container.replaceChildren(el('div', { class: 'empty' },
       el('div', { class: 'empty-icon', html: ICONS.qr }),
       el('p', {}, message),
-      hasAny ? null : el('button', { type: 'button', class: 'btn btn-primary', onclick: handlers.onAdd }, '+ Thêm tài khoản'),
+      hasAny ? null : el('button', { type: 'button', class: 'btn btn-primary', onclick: () => handlers.onAdd() }, '+ Thêm tài khoản'),
+      hasAny ? null : firstRunHints(settings, handlers),
     ));
     return;
   }

@@ -7,7 +7,11 @@ import { createQrDialogCore } from './qr-dialog-core.js';
 import { composePrintCard, vietqrImageUrl, fetchVietqrImage, fetchVietqrCardBlob } from './qr-print-card.js';
 import { el, ICONS, openModal } from './ui-helpers.js';
 
-export function openQrCardModal(account, settings, onUsed) {
+/**
+ * @param {{title?: string, intro?: string}} [options]  a custom dialog title and a short line
+ *   shown above the card (used by the "Mời tác giả một ly cà phê" dialog)
+ */
+export function openQrCardModal(account, settings, onUsed, { title, intro } = {}) {
   const useVietqrImage = settings.qrImageSource === 'vietqr';
   const image = el('img', { class: 'qrc-image', alt: `Mã VietQR ${bankLabel(account.bin)} ${account.accountNumber}` });
   const loader = el('div', { class: 'qrc-loader', html: '<span class="qrc-spinner"></span>' });
@@ -74,6 +78,7 @@ export function openQrCardModal(account, settings, onUsed) {
     el('div', { class: 'qrc-head' },
       el('div', { class: 'qrc-bank' }, bankLabel(account.bin)),
       el('div', { class: 'qrc-holder' }, account.accountName || account.nickname)),
+    intro ? el('p', { class: 'qrc-intro' }, intro) : null,
     el('div', { class: 'qrc-card' }, image, loader),
     note,
     el('div', { class: 'qrc-panel' },
@@ -95,7 +100,7 @@ export function openQrCardModal(account, settings, onUsed) {
       el('button', { type: 'button', class: 'link-btn', onclick: actions.copyImage }, 'Sao chép ảnh')),
   ];
   const modal = openModal({
-    title: `Mã VietQR · ${bankLabel(account.bin)}`, content, footer, variant: 'qrc',
+    title: title || `Mã VietQR · ${bankLabel(account.bin)}`, content, footer, variant: 'qrc',
     onClose: () => { renderToken += 1; setObjectUrl(''); },
   });
   core.start();

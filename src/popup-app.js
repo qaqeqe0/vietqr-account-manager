@@ -41,6 +41,7 @@ async function commit(change) {
 }
 
 const handlers = {
+  onOpenSettings: () => openSettings(),
   onAdd: (scanOptions = {}) => openAccountForm(null, {
     groups: state.settings.groups,
     accounts: state.accounts,
