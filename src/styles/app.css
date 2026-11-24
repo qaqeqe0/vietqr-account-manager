@@ -318,6 +318,28 @@
 
 @keyframes fade-in { from { opacity: 0; } }
 @keyframes pop-in { from { opacity: 0; transform: scale(0.95); } }
+/* Options page (options.html): category tabs in a sticky left column from md up, a
+   scrolling row of pills below md; the open category sits in a white card. */
+@layer components {
+  .settings-layout { @apply flex flex-col gap-3 md:grid md:grid-cols-[13rem_minmax(0,1fr)] md:gap-6 md:items-start; }
+  .settings-side { @apply contents md:flex md:flex-col md:gap-4 md:sticky md:top-24; }
+  .settings-tabs { @apply order-none flex gap-1.5 overflow-x-auto hide-scroll -mx-4 px-4 md:mx-0 md:px-0 md:flex-col md:gap-1 md:overflow-visible; }
+  .settings-tab {
+    @apply relative flex flex-none items-center gap-2.5 px-3.5 py-2 md:py-2.5 rounded-full md:rounded-lg text-sm font-medium whitespace-nowrap
+      text-slate-600 bg-white border border-slate-200 md:bg-transparent md:border-transparent md:w-full text-left
+      hover:text-slate-900 hover:bg-slate-100 transition-colors;
+  }
+  .settings-tab[aria-selected='true'] { @apply bg-blue-600 border-blue-600 text-white md:bg-blue-50 md:border-transparent md:text-blue-700 hover:bg-blue-600 md:hover:bg-blue-50; }
+  .settings-tab-icon { @apply w-4 text-center shrink-0; }
+  .settings-tab.has-changes::after { content: ''; @apply w-1.5 h-1.5 rounded-full bg-amber-500 md:ml-auto; }
+  .settings-tab[aria-selected='true'].has-changes::after { @apply bg-amber-300 md:bg-amber-500; }
+  .settings-side .about-line { @apply order-2 border-0 pt-0 mt-0 md:text-left md:px-3; }
+  .settings-panels { @apply order-1; }
+  .settings-panel { @apply bg-white border border-slate-200 rounded-2xl shadow-sm p-5 md:p-7 focus-visible:ring-offset-2; }
+  .settings-panel-title { @apply text-lg font-semibold text-slate-900 mb-1; }
+  .section-intro { @apply -mt-3 text-sm text-slate-500; }
+}
+
 /* Reduced motion: no dialog pop or fade and no hover or blur transitions; focus rings and
    the loading spinner stay. */
 @media (prefers-reduced-motion: reduce) {
