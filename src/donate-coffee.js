@@ -10,7 +10,7 @@ export const DONATE_ACCOUNT = Object.freeze({
   accountNumber: 'PSP2621518400000111',
   accountName: 'NGUYEN NGOC TRAN TU',
   nickname: 'Mời tác giả một ly cà phê',
-  defaultContent: 'Moi ca phe VietQR',
+  defaultContent: 'Moi ca phe So TK QR', // short_name of the extension; fits the 25-character limit
   // Coffee-sized amounts shown first as quick picks; no content history of its own.
   amountHistory: [25000, 50000, 100000],
   contentHistory: [],
