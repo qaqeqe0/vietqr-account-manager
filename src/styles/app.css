@@ -41,6 +41,7 @@
   .btn-danger { @apply bg-red-600 text-white hover:bg-red-700 shadow-sm; }
   .icon-btn { @apply inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors; }
   .nav-icon { @apply inline-flex items-center justify-center w-9 h-9 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors; }
+  .nav-icon.donate-btn { @apply hover:text-amber-600 hover:bg-amber-50; } /* coffee (donate) button */
   .link-btn { @apply text-xs font-medium text-blue-600 hover:text-blue-800 underline underline-offset-2; }
 
   /* Group chips */

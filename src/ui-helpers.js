@@ -14,6 +14,7 @@ export const ICONS = {
   star: fa('star'),
   plus: fa('plus'),
   search: fa('magnifying-glass'),
+  coffee: fa('mug-hot'),
   settings: fa('gear'),
   expand: fa('up-right-from-square'),
   download: fa('download'),
