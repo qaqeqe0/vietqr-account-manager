@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEu0lEQVR4nMVXXWxUVRD+5pzTbXHbWtBIEChtqUGoViL+RBp+Epr4E4FgpUQ0Go3xTU3EFx985kVU9MXEF2OCMUAxxrYahJDY2ARMkGIXWuW3tGmtQallW7p7zxkzZ9lty94l7LKJk2z25t4z8818M3PmHAKArVv36n37Wu3jy3bWREz5Wwx+lp2tAcEAINyeMBgBKX2BQO2J4OonR/vfu5DGpPRD0/IPW5Uq+ZTI3OM4CWaLYgqRhqISMAejziXf/Pn0O3sF20e3umFXS4mK7rcuAecCSwQlKkX1AMzMcEoZrVUESRd/vju2o43WNHyw2LE5SaTudBw4AmlZrrX4EGYHsNaFQtyKDoOtIqOY3ZiioNFYph1GlVUFLm4JyoOLjF2ZTCnxDEMEKKVQXlEays+t6EiAjpPWqKhg7jBgtYk5wQSl0jrOMVpeXInFS6pAM5CEw5Ghf9F+IAbm2UnKR0ewBFOwDcDVji2lKZQoWrY/hPd3PolcUlpm8MVnx1A1d04m8nx0rHXkfJFztSEpzxl02cChpv4uH9FLm77E+T8uQxsFZxkLFlXiq45XUHff3XDpOihEJw1HpKXPs8QGDKUI589cxtrmpVi9rg7Hjw2iva1XcghruSg6Ipm8z/ZsmpFntjRgc+uD2LKt0QMIX2EFWIiOSCgDUiwpW4QjP/zuKf6le8C/ZylyLo5OTge0TlG2YGElvmuL4ftvT/v2mr+gEuzYfy+GTrYDDCitMDRwxSvsP/gaEgnru0OMmRLlny9d/AcqbbAQnVwOWOv8hiE9K21TXTvP5zDjn2MMDY5h/54Tfl16dytEJy3UtOKjrOxIvq6OT8G5sF2Nru9qdNs62SlI6xAym0yYhM2CQnREQttw2mrIL9fS1B7rh7+AOb/vTtsJy79IKAP5DiMBn7oW4NpkErpEoaKi1D9fmwxSTjD8+/LySFY7mjDwvAaLIkxNBrj/gflYu2EpLp77239f+chCNK2vw0Q8gTuiEf/+YEcfIhHj7YQ6oAsZRgQP8vTm5Xjh1VUYHR7Hvj2/YmNLA57bvjKjMzoyjoPtfSk6cjJA+Q8WiSYS0Th1cgR9vX/i1G8jfu1Ph89iUc1cvyYajfjvUh+ZnNwsBTaPwSJg5ZWpfeDA1z1IJiyeWFuLZQ3z0banx0ddVmZgHWfRn9OBGwfLuuZ6LKmdh85vYlmDRWpACq5x1b1Y31yP40cH8WhTNV5+4zEMD42h6/AZlM4xfh4EgSv+MFKKMBFP4qmNqRpYs+EvfL67G7GeYcROjmByIol4POHrK3qrXaDzGCy+Bko1egWwZ9j//9jRj64j53xxNj680HfH+bOXcaizP7sLmNlmTkUFDBapAYlMjB/u7IdjIFoRgTYa42NTme4YHhzDoY7+WQUo2AagAUW6Rs5oclYrZLBIQBJZyjj5CKWLSiJqmpkTw9e7IKWiSMOyHaDVK3Z9bFT07ZnH8kIHy40iS4RBWSnMSLumiHZyLNeBi++++cUkz8ES7gTNYubGi4nqir17icm+rlWEFBkteREOBCTXLx/xoNI97ORuJuByNSPBFGwlF0S5owXBxDYCjRo9RxOZIt8LhQlD3jZoVLAEM3M5/T+v5/8Bg/qClpl1TuwAAAAASUVORK5CYII=">
   <title>Chính sách quyền riêng tư · Sổ tài khoản QR chuyển khoản</title>
   <style>
     :root { color-scheme: light; --text: #0f172a; --muted: #475569; --line: #e2e8f0; --accent: #2563eb; }
@@ -21,12 +22,22 @@
     th { background: #f1f5f9; color: var(--text); }
     td { color: var(--muted); background: #fff; }
     a { color: var(--accent); }
+    /* Phones: each table row becomes a stacked card with its column name as a label. */
+    @media (max-width: 600px) {
+      table, tbody, tr, td { display: block; width: 100%; }
+      tr:first-child { display: none; }
+      tr { margin: 0 0 12px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
+      td { border: 0; border-top: 1px solid var(--line); }
+      tr td:first-child { border-top: 0; font-weight: 600; color: var(--text); background: #f1f5f9; }
+      td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: .04em; }
+      tr td:first-child::before { display: none; }
+    }
   </style>
 </head>
 <body>
 <main>
   <h1>Chính sách quyền riêng tư</h1>
-  <p class="meta">Sổ tài khoản QR chuyển khoản (Chrome extension) · Cập nhật: 24/11/2026 · Áp dụng từ phiên bản 1.2.4</p>
+  <p class="meta">Sổ tài khoản QR chuyển khoản (Chrome extension) · Cập nhật: 24/11/2026 · Áp dụng từ phiên bản 1.2.5</p>
 
   <span class="lang">Tiếng Việt</span>
 
@@ -44,11 +55,11 @@
   <h3>Khi nào dữ liệu được gửi đi</h3>
   <table>
     <tr><th>Tính năng</th><th>Gửi tới</th><th>Dữ liệu</th><th>Khi nào</th></tr>
-    <tr><td>Ảnh thẻ VietQR chính thức</td><td>img.vietqr.io</td><td>Mã ngân hàng (BIN), số tài khoản, tên chủ tài khoản, số tiền, nội dung</td><td>Khi mở mã QR, nếu bật "Dùng ảnh thẻ chính thức từ img.vietqr.io" trong Cài đặt (bật sẵn; tắt thì thẻ được vẽ hoàn toàn trên máy)</td></tr>
-    <tr><td>Logo ngân hàng</td><td>api.vietqr.io</td><td>Chỉ mã ngân hàng, không có dữ liệu cá nhân</td><td>Khi hiển thị danh sách, nếu cho phép ảnh từ VietQR.io</td></tr>
-    <tr><td>Tra tên chủ tài khoản</td><td>api.vietqr.io</td><td>Mã ngân hàng và số tài khoản, kèm API key của bạn</td><td>Chỉ khi bạn nhập API key VietQR.io và bấm "Tra tên" hoặc quét mã QR không có tên</td></tr>
-    <tr><td>Đồng bộ Google Sheet</td><td>Apps Script do chính bạn triển khai (script.google.com)</td><td>Toàn bộ sổ tài khoản và cài đặt</td><td>Chỉ khi bạn bật; dữ liệu nằm trong Google Sheet của bạn</td></tr>
-    <tr><td>Sao lưu Google Drive</td><td>Google Drive của bạn (www.googleapis.com)</td><td>Toàn bộ sổ tài khoản và cài đặt, trong file <code>so-tai-khoan-vietqr.json</code></td><td>Chỉ khi bạn bật và đăng nhập Google; quyền <code>drive.file</code> chỉ cho phép đụng tới file do tiện ích tạo</td></tr>
+    <tr><td data-label="Tính năng">Ảnh thẻ VietQR chính thức</td><td data-label="Gửi tới">img.vietqr.io</td><td data-label="Dữ liệu">Mã ngân hàng (BIN), số tài khoản, tên chủ tài khoản, số tiền, nội dung</td><td data-label="Khi nào">Khi mở mã QR, nếu bật "Dùng ảnh thẻ chính thức từ img.vietqr.io" trong Cài đặt (bật sẵn; tắt thì thẻ được vẽ hoàn toàn trên máy)</td></tr>
+    <tr><td data-label="Tính năng">Logo ngân hàng</td><td data-label="Gửi tới">api.vietqr.io</td><td data-label="Dữ liệu">Chỉ mã ngân hàng, không có dữ liệu cá nhân</td><td data-label="Khi nào">Khi hiển thị danh sách, nếu cho phép ảnh từ VietQR.io</td></tr>
+    <tr><td data-label="Tính năng">Tra tên chủ tài khoản</td><td data-label="Gửi tới">api.vietqr.io</td><td data-label="Dữ liệu">Mã ngân hàng và số tài khoản, kèm API key của bạn</td><td data-label="Khi nào">Chỉ khi bạn nhập API key VietQR.io và bấm "Tra tên" hoặc quét mã QR không có tên</td></tr>
+    <tr><td data-label="Tính năng">Đồng bộ Google Sheet</td><td data-label="Gửi tới">Apps Script do chính bạn triển khai (script.google.com)</td><td data-label="Dữ liệu">Toàn bộ sổ tài khoản và cài đặt</td><td data-label="Khi nào">Chỉ khi bạn bật; dữ liệu nằm trong Google Sheet của bạn</td></tr>
+    <tr><td data-label="Tính năng">Sao lưu Google Drive</td><td data-label="Gửi tới">Google Drive của bạn (www.googleapis.com)</td><td data-label="Dữ liệu">Toàn bộ sổ tài khoản và cài đặt, trong file <code>so-tai-khoan-vietqr.json</code></td><td data-label="Khi nào">Chỉ khi bạn bật và đăng nhập Google; quyền <code>drive.file</code> chỉ cho phép đụng tới file do tiện ích tạo</td></tr>
   </table>
   <p>Các quyền truy cập tên miền trên đều là <strong>quyền tuỳ chọn</strong>: Chrome chỉ hỏi bạn khi bạn bật tính năng tương ứng.</p>
 
@@ -84,11 +95,11 @@
   <h3>When data is sent</h3>
   <table>
     <tr><th>Feature</th><th>Sent to</th><th>Data</th><th>When</th></tr>
-    <tr><td>Official VietQR card image</td><td>img.vietqr.io</td><td>Bank BIN, account number, holder name, amount, message</td><td>When a QR is opened, if "Use the official card image from img.vietqr.io" is on in Settings (on by default; when off, the card is drawn entirely on your device)</td></tr>
-    <tr><td>Bank logos</td><td>api.vietqr.io</td><td>Bank code only, no personal data</td><td>When the list is shown, if VietQR.io images are allowed</td></tr>
-    <tr><td>Account holder lookup</td><td>api.vietqr.io</td><td>Bank BIN and account number, with your own API key</td><td>Only if you enter a VietQR.io API key and press "Tra tên" (look up) or scan a QR without a name</td></tr>
-    <tr><td>Google Sheet sync</td><td>Your own Apps Script deployment (script.google.com)</td><td>The whole account book and settings</td><td>Only when you turn it on; the data lives in your Google Sheet</td></tr>
-    <tr><td>Google Drive backup</td><td>Your Google Drive (www.googleapis.com)</td><td>The whole account book and settings, in <code>so-tai-khoan-vietqr.json</code></td><td>Only when you turn it on and sign in; the <code>drive.file</code> scope only reaches files the extension created</td></tr>
+    <tr><td data-label="Feature">Official VietQR card image</td><td data-label="Sent to">img.vietqr.io</td><td data-label="Data">Bank BIN, account number, holder name, amount, message</td><td data-label="When">When a QR is opened, if "Use the official card image from img.vietqr.io" is on in Settings (on by default; when off, the card is drawn entirely on your device)</td></tr>
+    <tr><td data-label="Feature">Bank logos</td><td data-label="Sent to">api.vietqr.io</td><td data-label="Data">Bank code only, no personal data</td><td data-label="When">When the list is shown, if VietQR.io images are allowed</td></tr>
+    <tr><td data-label="Feature">Account holder lookup</td><td data-label="Sent to">api.vietqr.io</td><td data-label="Data">Bank BIN and account number, with your own API key</td><td data-label="When">Only if you enter a VietQR.io API key and press "Tra tên" (look up) or scan a QR without a name</td></tr>
+    <tr><td data-label="Feature">Google Sheet sync</td><td data-label="Sent to">Your own Apps Script deployment (script.google.com)</td><td data-label="Data">The whole account book and settings</td><td data-label="When">Only when you turn it on; the data lives in your Google Sheet</td></tr>
+    <tr><td data-label="Feature">Google Drive backup</td><td data-label="Sent to">Your Google Drive (www.googleapis.com)</td><td data-label="Data">The whole account book and settings, in <code>so-tai-khoan-vietqr.json</code></td><td data-label="When">Only when you turn it on and sign in; the <code>drive.file</code> scope only reaches files the extension created</td></tr>
   </table>
   <p>All of these hosts are <strong>optional permissions</strong>: Chrome asks you only when you turn the matching feature on.</p>
 

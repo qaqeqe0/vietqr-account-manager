@@ -1,6 +1,6 @@
-# Hồ sơ đăng Chrome Web Store — Sổ tài khoản QR chuyển khoản 1.2.4
+# Hồ sơ đăng Chrome Web Store — Sổ tài khoản QR chuyển khoản 1.2.5
 
-Nội dung để dán vào [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole). File nộp: `vietqr-account-manager-vite-v1.2.4.zip` (build từ nhánh `main`, chạy `npm run zip`).
+Nội dung để dán vào [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole). File nộp: `vietqr-account-manager-vite-v1.2.5.zip` (build từ nhánh `main`, chạy `npm run zip`).
 
 ## 1. Trước khi nộp
 

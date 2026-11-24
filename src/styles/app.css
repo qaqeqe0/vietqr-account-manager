@@ -52,6 +52,15 @@
   /* Navbar "Thêm tài khoản": full label on wide tab view, icon-only "+" in the popup. */
   .nav-add { @apply hidden md:inline-flex; }
   .nav-add-label { @apply hidden md:inline; }
+  /* Product name: one line when there is room; on phones and in the 420px popup it splits
+     into a small "Sổ tài khoản" over a bold "QR chuyển khoản" so it is never cut off. */
+  .brand-title { @apply min-w-0 font-bold text-lg md:text-xl tracking-tight text-slate-900 leading-tight; }
+  @media (max-width: 639px) {
+    .brand-title { @apply flex flex-col text-base; }
+    .brand-kicker { @apply text-[11px] font-semibold uppercase tracking-wider text-slate-500; }
+  }
+  body:not(.tab-view) .brand-title { @apply flex flex-col text-base; }
+  body:not(.tab-view) .brand-kicker { @apply text-[11px] font-semibold uppercase tracking-wider text-slate-500; }
   body:not(.tab-view) .nav-add { @apply inline-flex w-9 h-9 p-0; }
   body:not(.tab-view) #btnAddFab { @apply hidden; }
 
@@ -85,17 +94,26 @@
   .account-card { @apply bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow flex flex-col; }
   .card-thumb { @apply relative w-20 h-20 shrink-0 bg-white rounded-lg p-0.5 border border-slate-100 overflow-hidden flex items-end justify-center; }
   /* VietQR card picture: faded and slightly blurred until the card is hovered or focused. */
-  .card-thumb-image { @apply w-full h-full object-contain object-bottom opacity-60 blur-[1.5px] transition duration-200 group-hover:opacity-100 group-hover:blur-0 group-focus-within:opacity-100 group-focus-within:blur-0; }
+  .card-thumb-image { @apply w-full h-full object-contain object-bottom transition duration-200; }
+  /* Faded until hovered only where hovering exists; touch screens always show the card clearly. */
+  @media (hover: hover) {
+    .card-thumb-image { @apply opacity-60 blur-[1.5px] group-hover:opacity-100 group-hover:blur-0 group-focus-within:opacity-100 group-focus-within:blur-0; }
+  }
   /* VietQR.io logos are wide (about 8:3): fixed height, width follows. */
   .bank-logo { @apply shrink-0 h-5 w-auto max-w-[56px] object-contain rounded-sm bg-white; }
   /* Full-tab card: the bank logo sits centred above the QR picture, level with the bank name. */
   .card-logo-badge { @apply absolute top-0 left-1/2 -translate-x-1/2 z-10 h-6 max-w-[64px] px-1 py-0.5 rounded-md border border-slate-200 shadow-sm; }
   .card-thumb canvas { @apply opacity-90 group-hover:opacity-100 transition-opacity; }
   .card-thumb-overlay { @apply absolute inset-0 flex items-center justify-center bg-black/10 text-white opacity-0 group-hover:opacity-100 transition-opacity; }
-  .card-icon { @apply text-slate-400 transition-colors; }
+  /* Card actions: icons keep their size, the hit area is at least 32px (WCAG 2.5.8 asks 24px). */
+  .card-icon { @apply inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:bg-slate-100 transition-colors; }
+  .card-copy { @apply inline-flex items-center justify-center w-7 h-7 -my-1 rounded-md text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors; }
+  .card-receive { @apply inline-flex items-center gap-1.5 -ml-2 px-2 py-1.5 rounded-lg text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 transition-colors; }
   .card-icon.is-fav { @apply text-amber-400 hover:text-amber-500; }
   .tag { @apply shrink-0 text-xs font-medium px-2 py-0.5 rounded-md bg-blue-50 text-blue-700; }
   .empty-state { @apply col-span-full flex flex-col items-center justify-center py-16 text-center; }
+  .empty-hints { @apply mt-6 mx-auto max-w-md grid gap-2 text-left text-sm text-slate-600 list-none p-0; }
+  .empty-hint { @apply px-3.5 py-2.5 rounded-lg bg-white border border-slate-200; }
   .sync-badge { @apply block mt-1 text-xs text-left text-slate-500 hover:underline max-w-full truncate; }
   .sync-badge.ok { @apply text-green-600; }
   .sync-badge.err { @apply text-red-600; }
@@ -213,7 +231,10 @@
   .modal-qrc .modal-head { @apply absolute top-3 right-3 p-0 z-10; }
   .modal-qrc .modal-head h2 { @apply sr-only; }
   .qrc-sheet { @apply flex flex-col items-center gap-4 pt-4; }
+  .about-line { @apply mt-1 pt-3 border-t border-slate-200 text-xs text-slate-500 text-center; } /* Settings footer: version + privacy */
+  .about-line a { @apply text-blue-600 hover:underline; }
   .qrc-head { @apply text-center; }
+  .qrc-intro { @apply m-0 px-3 py-2.5 rounded-xl bg-amber-50 text-amber-900 text-sm leading-snug text-center; } /* donate dialog line */
   .qrc-bank { @apply text-2xl font-bold text-slate-900; }
   .qrc-holder { @apply mt-0.5 text-sm text-slate-500 uppercase; }
   .qrc-card { @apply relative w-64 min-h-[200px] p-2 grid place-items-center bg-white rounded-xl border border-slate-100 shadow-[0_0_15px_rgba(0,0,0,0.1)]; }
@@ -225,11 +246,12 @@
   .qrc-row { @apply flex justify-between items-center mb-1; }
   .qrc-label { @apply text-sm text-slate-500; }
   .qrc-number { @apply flex items-center gap-2 text-lg font-bold text-slate-900; }
-  .qrc-copy { @apply text-blue-600 hover:text-blue-800 p-1 rounded transition-colors; }
+  .qrc-copy { @apply inline-flex items-center justify-center w-8 h-8 -my-1 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors; }
   .qrc-panel .field-hint { @apply mt-0; }
   .modal-qrc .modal-foot { @apply flex-col items-stretch gap-2; }
   .qrc-download { @apply w-full py-3 text-base rounded-xl; }
-  .qrc-secondary { @apply flex justify-center gap-5; }
+  .qrc-secondary { @apply flex justify-center gap-3; }
+  .qrc-secondary .link-btn { @apply inline-flex items-center min-h-[28px] px-2 rounded-md hover:bg-blue-50; } /* 24px+ targets */
   body:not(.tab-view) .modal-qrc .modal-foot .btn.qrc-download { @apply text-sm py-3; }
 
   /* Scan strip and camera */
@@ -262,7 +284,9 @@
 
 @keyframes fade-in { from { opacity: 0; } }
 @keyframes pop-in { from { opacity: 0; transform: scale(0.95); } }
+/* Reduced motion: no dialog pop or fade and no hover or blur transitions; focus rings and
+   the loading spinner stay. */
 @media (prefers-reduced-motion: reduce) {
   .backdrop, .modal { animation: none; }
-  .toast { transition: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }

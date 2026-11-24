@@ -9,6 +9,7 @@ import { drawQr } from '@shared/qr-image-renderer.js';
 import { el, ICONS, bankLogo } from './ui-helpers.js';
 import { vietqrImageUrl } from '@shared/qr-print-card.js';
 import { compactAccountRow } from './account-row-compact.js';
+import { firstRunHints } from '@shared/empty-state-hints.js';
 
 export { FILTER_ALL, FILTER_FAVORITE, filterAccounts, allGroups };
 
@@ -108,7 +109,7 @@ function accountCard(account, handlers, settings) {
         el('div', { class: 'text-slate-500 font-mono text-sm mt-0.5 flex items-center gap-2' },
           el('span', {}, account.accountNumber),
           el('button', {
-            type: 'button', class: 'text-slate-400 hover:text-blue-600 transition-colors',
+            type: 'button', class: 'card-copy',
             title: named('Sao chép số tài khoản của'), 'aria-label': named('Sao chép số tài khoản của'),
             html: ICONS.copy, onclick: () => handlers.onCopy(account),
           })),
@@ -117,12 +118,12 @@ function accountCard(account, handlers, settings) {
           account.note ? el('span', { class: 'text-xs text-slate-400 truncate' }, account.note) : null),
       ),
     ),
-    el('div', { class: 'bg-slate-50 px-4 py-2.5 flex justify-between items-center' },
+    el('div', { class: 'bg-slate-50 px-4 py-1.5 flex justify-between items-center' },
       el('button', {
-        type: 'button', class: 'text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors flex items-center gap-1.5',
+        type: 'button', class: 'card-receive',
         onclick: () => handlers.onOpenQr(account),
       }, el('span', { html: ICONS.qr }), 'Nhận tiền'),
-      el('div', { class: 'flex gap-3' },
+      el('div', { class: 'flex gap-1' },
         actionButton('star', account.favorite ? named('Bỏ yêu thích') : named('Yêu thích'), () => handlers.onToggleFavorite(account), account.favorite ? 'is-fav' : 'hover:text-amber-500'),
         actionButton('edit', named('Sửa'), () => handlers.onEdit(account), 'hover:text-amber-600'),
         actionButton('trash', named('Xoá'), () => handlers.onDelete(account), 'hover:text-red-600'),
@@ -140,7 +141,8 @@ export function renderAccountList(container, accounts, handlers, { hasAny, query
       el('p', { class: 'text-slate-500 mt-1 mb-6' }, searching
         ? `Không có tài khoản nào phù hợp${query ? ` với “${query}”` : ' trong nhóm này'}.`
         : 'Thêm số tài khoản ngân hàng đầu tiên để tạo mã VietQR.'),
-      searching ? null : el('button', { type: 'button', class: 'btn btn-primary px-6', onclick: handlers.onAdd }, 'Thêm tài khoản ngay'),
+      searching ? null : el('button', { type: 'button', class: 'btn btn-primary px-6', onclick: () => handlers.onAdd() }, 'Thêm tài khoản ngay'),
+      searching ? null : firstRunHints(settings, handlers),
     ));
     return;
   }
