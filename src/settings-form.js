@@ -1,4 +1,4 @@
-// Settings form shown on the extension's options page: your name for {toi}, editable
+// Settings form shown on the extension's options page, split into tabs: your name for {toi}, editable
 // groups, content templates, QR dialog style, backup/restore, Google Sheet / Drive sync
 // and VietQR.io name lookup.
 import { DEFAULT_GROUPS, DEFAULT_TEMPLATES } from './storage.js';
@@ -23,7 +23,8 @@ const lines = (text) => [...new Set(String(text).split('\n').map((s) => s.trim()
  * Builds the settings form for `settings`.
  * @param {object} settings
  * @param {{onExport: () => void, onImport: (file: File) => void}} handlers
- * @returns {{content: HTMLElement, collectChanges: () => ({changes: object} | {error: string})}}
+ * @returns {{sections: {id: string, label: string, icon: string, node: HTMLElement}[], about: HTMLElement,
+ *   collectChanges: () => ({changes: object} | {error: string})}} one section per settings tab;
  *   collectChanges returns only the fields edited here, so values changed meanwhile by an
  *   import or by sync are not overwritten with stale lists.
  */
@@ -60,27 +61,35 @@ export function createSettingsForm(settings, { onExport, onImport }) {
   }, 'Khôi phục mặc định');
 
   const syncSlot = el('div', { class: 'sync-slot' });
-  const content = el('div', { class: 'account-form' },
-    el('label', { class: 'form-field' }, el('span', { class: 'form-label' }, 'Tên chủ tài khoản của bạn (người chuyển)'), myName,
-      el('span', { class: 'field-hint' }, 'Dùng cho nội dung mặc định “TÊN BẠN chuyen tien” và biến {toi}.')),
-    el('div', { class: 'form-field' },
-      el('span', { class: 'form-label' }, 'Kiểu hộp thoại mã QR'), qrLayout, vietqrRow,
-      el('span', { class: 'field-hint' }, 'Ảnh từ img.vietqr.io cần internet và gửi số TK, tên chủ TK, số tiền, nội dung tới VietQR.io. Khi mất mạng sẽ tự dùng thẻ tạo trên máy (chữ thay cho logo).')),
-    el('label', { class: 'form-field' },
-      el('span', { class: 'form-label' }, 'Nhóm (mỗi dòng một nhóm) ', resetLink(groups, DEFAULT_GROUPS)), groups),
-    el('label', { class: 'form-field' },
-      el('span', { class: 'form-label' }, 'Mẫu nội dung chuyển khoản ', resetLink(templates, DEFAULT_TEMPLATES)), templates,
-      el('span', { class: 'field-hint' }, 'Biến: {toi} tên bạn · {nguoinhan} tên người nhận · {thang} tháng/năm · {ngay} ngày/tháng')),
-    el('div', { class: 'backup-row' },
-      el('span', { class: 'form-label' }, 'Sao lưu dữ liệu'),
-      el('div', { class: 'backup-actions' },
-        el('button', { type: 'button', class: 'btn btn-ghost', onclick: onExport }, 'Xuất file JSON'),
-        el('button', { type: 'button', class: 'btn btn-ghost', onclick: () => fileInput.click() }, 'Nhập file JSON'),
-        fileInput)),
-    syncSlot,
-    el('p', { class: 'field-hint' }, 'Dữ liệu lưu trong trình duyệt này và chỉ gửi tới Google Sheet / Drive / VietQR.io khi bạn bật ở trên. Mã QR được tạo offline (trừ khi dùng ảnh thẻ từ img.vietqr.io).'),
-    aboutLine(),
-  );
+  const field = (label, ...children) => el('label', { class: 'form-field' }, el('span', { class: 'form-label' }, ...[label].flat()), ...children);
+  const hint = (text) => el('span', { class: 'field-hint' }, text);
+  const section = (id, label, icon, intro, ...children) => ({
+    id, label, icon,
+    node: el('div', { class: 'account-form' }, el('p', { class: 'section-intro' }, intro), ...children),
+  });
+  const sections = [
+    section('general', 'Chung', 'sliders', 'Tên người chuyển và cách hiện mã QR.',
+      field('Tên chủ tài khoản của bạn (người chuyển)', myName,
+        hint('Dùng cho nội dung mặc định “TÊN BẠN chuyen tien” và biến {toi}.')),
+      el('div', { class: 'form-field' },
+        el('span', { class: 'form-label' }, 'Kiểu hộp thoại mã QR'), qrLayout, vietqrRow,
+        hint('Ảnh từ img.vietqr.io cần internet và gửi số TK, tên chủ TK, số tiền, nội dung tới VietQR.io. Khi mất mạng sẽ tự dùng thẻ tạo trên máy (chữ thay cho logo).'))),
+    section('book', 'Nhóm & nội dung', 'list', 'Nhóm để lọc sổ tài khoản và các mẫu nội dung chuyển khoản gợi ý sẵn.',
+      field(['Nhóm (mỗi dòng một nhóm) ', resetLink(groups, DEFAULT_GROUPS)], groups),
+      field(['Mẫu nội dung chuyển khoản ', resetLink(templates, DEFAULT_TEMPLATES)], templates,
+        hint('Biến: {toi} tên bạn · {nguoinhan} tên người nhận · {thang} tháng/năm · {ngay} ngày/tháng'))),
+    section('sync', 'Đồng bộ', 'sync', 'Đồng bộ sổ qua Google Sheet hoặc Google Drive, và tra tên chủ tài khoản qua VietQR.io. Các thay đổi ở mục này được lưu ngay.',
+      syncSlot),
+    section('data', 'Dữ liệu & sao lưu', 'download', 'Sao lưu sổ ra file JSON hoặc nhập lại từ file đã sao lưu.',
+      el('div', { class: 'backup-row' },
+        el('span', { class: 'form-label' }, 'Sao lưu dữ liệu'),
+        el('div', { class: 'backup-actions' },
+          el('button', { type: 'button', class: 'btn btn-ghost', onclick: onExport }, 'Xuất file JSON'),
+          el('button', { type: 'button', class: 'btn btn-ghost', onclick: () => fileInput.click() }, 'Nhập file JSON'),
+          fileInput),
+        hint('Nhập file chỉ thêm tài khoản mới và giữ bản mới hơn cho tài khoản trùng; không xoá gì trong sổ.')),
+      el('p', { class: 'field-hint' }, 'Dữ liệu lưu trong trình duyệt này và chỉ gửi tới Google Sheet / Drive / VietQR.io khi bạn bật trong mục Đồng bộ hoặc dùng ảnh thẻ từ img.vietqr.io. Mã QR được tạo offline.')),
+  ];
   // Sync settings save on their own as they change (device-only config).
   createSyncSettingsPanel({ isPopup: false })
     .then((panel) => syncSlot.replaceChildren(panel))
@@ -100,5 +109,5 @@ export function createSettingsForm(settings, { onExport, onImport }) {
     if (templateList.join('\n') !== settings.templates.join('\n')) changes.templates = templateList;
     return { changes };
   };
-  return { content, collectChanges };
+  return { sections, about: aboutLine(), collectChanges };
 }

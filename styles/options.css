@@ -1,9 +1,38 @@
-/* Options page (options.html): one centred card with the settings form and a Save bar pinned to the bottom. */
-.options-page { max-width: 680px; margin: 0 auto; padding: 24px 16px 96px; }
-.options-head { margin-bottom: 16px; }
+/* Options page (options.html): category tabs in a left column on wide screens (a scrolling
+   row on narrow ones), the open category in a card, and a Save bar pinned to the bottom. */
+.options-page { max-width: 960px; margin: 0 auto; padding: 24px 16px 96px; }
+.options-head { margin-bottom: 20px; }
 .options-head h1 { font-size: 20px; }
-.options-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
+
+.settings-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; align-items: start; }
+.settings-side { position: sticky; top: 16px; display: flex; flex-direction: column; gap: 16px; }
+.settings-tabs { display: flex; flex-direction: column; gap: 4px; }
+.settings-tab { position: relative; display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: 0; border-radius: 10px; background: transparent; color: var(--muted); font-weight: 600; text-align: left; cursor: pointer; }
+.settings-tab:hover { background: var(--surface-2); color: var(--text); }
+.settings-tab[aria-selected="true"] { background: var(--accent-soft); color: var(--accent); }
+.settings-tab-icon { display: inline-grid; place-items: center; width: 20px; }
+.settings-tab-icon svg { width: 18px; height: 18px; }
+.settings-tab.has-changes::after { content: ""; width: 7px; height: 7px; margin-left: auto; border-radius: 50%; background: var(--warn); }
+.settings-side .about-line { margin: 0; padding: 12px 4px 0; text-align: left; }
+
+.settings-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px 24px; }
+.settings-panel:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+.settings-panel-title { margin: 0 0 4px; font-size: 17px; }
+.section-intro { margin: 0 0 4px; color: var(--muted); }
+
+/* Narrow screens: tabs become a scrolling row above the card; the version line goes last. */
+@media (max-width: 720px) {
+  .settings-layout { display: flex; flex-direction: column; gap: 12px; }
+  .settings-side { display: contents; }
+  .settings-tabs { order: 0; flex-direction: row; overflow-x: auto; scrollbar-width: none; }
+  .settings-tabs::-webkit-scrollbar { display: none; }
+  .settings-tab { width: auto; white-space: nowrap; flex: none; }
+  .settings-panels { order: 1; }
+  .settings-side .about-line { order: 2; text-align: center; }
+  .settings-panel { padding: 16px; }
+}
+
 .options-bar { position: fixed; inset: auto 0 0 0; background: var(--surface); border-top: 1px solid var(--border); box-shadow: 0 -4px 14px rgba(21, 19, 43, .06); }
-.options-bar-inner { max-width: 680px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.options-bar-inner { max-width: 960px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
 .options-bar-inner .muted { margin-right: auto; }
 .options-bar .btn:disabled { opacity: .5; cursor: default; filter: none; }
