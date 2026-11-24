@@ -5,22 +5,23 @@ import { createScanStrip } from './qr-scan-strip.js';
 import { parsePastedAccount } from './paste-account-parser.js';
 import { normalizeAccountName, parseAmount, formatVnd, createId } from './text-utils.js';
 import { el, openModal, toast } from './ui-helpers.js';
-import { field, createBankPicker, createGroupPicker, createHolderNameField } from './account-form-fields.js';
+import { field, createGroupPicker, createHolderNameField } from './account-form-fields.js';
+import { createBankPicker } from './bank-combobox.js';
 import { scanResultMessage, duplicateMessage, acceptImagePasteAndDrop } from './account-form-scan.js';
 
 /**
  * @param {object|null} account  existing account to edit, or null to add
- * @param {{groups: string[], accounts: object[], defaultGroup?: string, onSave: (account) => void,
+ * @param {{groups: string[], accounts: object[], settings?: object, defaultGroup?: string, onSave: (account) => void,
  *          isPopup?: boolean, onOpenTab?: (hash: string) => void, onOpenExisting?: (account) => void,
  *          autoScan?: 'file'|'camera', initialImage?: Blob, initialImages?: Blob[]}} options
  */
 export function openAccountForm(account, {
-  groups, accounts, defaultGroup, onSave, isPopup = false, onOpenTab, onOpenExisting, autoScan, initialImage, initialImages,
+  groups, accounts, settings, defaultGroup, onSave, isPopup = false, onOpenTab, onOpenExisting, autoScan, initialImage, initialImages,
 }) {
   const editing = !!account;
   const data = account || { bin: '', accountNumber: '', accountName: '', nickname: '', group: defaultGroup || groups[0], note: '', favorite: false, defaultAmount: 0, defaultContent: '' };
 
-  const bank = createBankPicker(data.bin);
+  const bank = createBankPicker(data.bin, settings);
   const numberInput = el('input', { class: 'field-input mono', required: true, inputmode: 'numeric', placeholder: 'VD: 0123456789', value: data.accountNumber });
   numberInput.addEventListener('input', () => { numberInput.value = numberInput.value.replace(/[^A-Za-z0-9]/g, ''); });
   const holder = createHolderNameField({ value: data.accountName, getBin: bank.value, getAccountNumber: () => numberInput.value.trim() });
@@ -89,7 +90,7 @@ export function openAccountForm(account, {
     event?.preventDefault();
     const bin = bank.value();
     const accountNumber = numberInput.value.trim();
-    if (!bin) { toast('Chọn ngân hàng', 'err'); bank.select.focus(); return; }
+    if (!bin) { toast('Chọn ngân hàng', 'err'); bank.input.focus(); return; }
     if (!/^[A-Za-z0-9]{6,19}$/.test(accountNumber)) { toast('Số tài khoản gồm 6–19 chữ số', 'err'); numberInput.focus(); return; }
     const groupName = group.value();
     if (!groupName) { toast('Nhập tên nhóm mới', 'err'); group.newInput.focus(); return; }
@@ -124,7 +125,7 @@ export function openAccountForm(account, {
     const target = event.target;
     if (target.tagName !== 'INPUT' || ['checkbox', 'button', 'file'].includes(target.type)) return;
     event.preventDefault();
-    if (target === bank.search) { numberInput.focus(); return; } // Enter confirms the bank match
+    if (target === bank.input) { numberInput.focus(); return; } // Enter confirms the bank match
     submit();
   });
   if (!editing) acceptImagePasteAndDrop(form, (image) => scan.scanBlob(image));

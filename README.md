@@ -12,6 +12,7 @@ Quản lý số tài khoản ngân hàng và tạo mã VietQR chuyển khoản n
 - Ô nội dung: mặc định là tên chủ tài khoản của bạn — người chuyển, nhập trong Cài đặt — (in hoa) + "chuyen tien" (hoặc nội dung mặc định riêng của tài khoản nếu có), nút chọn nhanh (nội dung gần đây, mẫu), tự bỏ dấu/ký tự đặc biệt trong QR, đếm ký tự.
 - Hai kiểu hộp thoại mã QR (Cài đặt → "Kiểu hộp thoại mã QR"): "Thẻ VietQR" (mặc định) giống mẫu in, hoặc cổ điển — tên ngân hàng + chủ TK, thẻ VietQR có logo (ảnh từ img.vietqr.io, cần mạng và gửi số TK/tên/số tiền/nội dung tới VietQR.io; mất mạng thì tự dùng thẻ vẽ offline), khung số TK, ô số tiền, ô nội dung, nút "Tải mã QR". Trên thẻ, dòng "Số tiền" in đậm cùng kiểu với dòng "Số TK".
 - Sao chép số TK, sao chép thông tin chuyển khoản, sao chép ảnh QR, tải ảnh QR (file PNG thật, mở được bằng mọi trình xem ảnh; ở kiểu "Thẻ VietQR" là đúng thẻ đang hiện, ở kiểu cổ điển là ảnh có tên, ngân hàng, số tiền, nội dung).
+- Chọn ngân hàng trong một ô duy nhất: gõ để lọc (vcb, mb, vietin…, không cần dấu), danh sách thả xuống có logo, mã ngân hàng khớp từ đầu được xếp trước; chọn bằng chuột hoặc ↑ ↓ Enter, Esc đóng danh sách.
 - Dán nhanh thông tin tài khoản từ tin nhắn để tự điền form.
 - Chuột phải trên trang web → **"Quét mã VietQR trên trang này"**, hoặc chuột phải vào một ảnh → **"Thêm tài khoản từ mã QR trong ảnh này"**: tiện ích chụp tab đang xem, mở popup (hoặc tab mới nếu trình duyệt không mở được popup) và tự điền form thêm tài khoản.
 - Thêm tài khoản bằng mã QR: quét mã VietQR đang hiện trên trang web, dán (⌘/Ctrl+V) hoặc kéo thả ảnh chụp mã QR, chọn ảnh, hoặc dùng camera. Tự điền ngân hàng, số TK, số tiền và nội dung mặc định. Tên chủ TK lấy theo thứ tự: tên trong mã QR (nếu ngân hàng có ghi) → đọc chữ in cạnh mã QR trên ảnh (OCR chạy ngay trên máy) → tra qua VietQR.io nếu bạn đã nhập API key. Nút "Tra tên" trong form cũng dùng VietQR.io; báo nếu tài khoản đã có trong sổ. Trong popup, "Chọn ảnh" và "Camera" mở toàn tab vì Chrome đóng popup khi mở hộp chọn file.
@@ -36,7 +37,7 @@ Mở `http://localhost:5178/popup.html` (dữ liệu khi đó lưu ở localStor
 ## Cấu trúc
 
 - `popup.html` — trang popup.
-- `styles/popup.css` (bố cục chính, biến màu sáng/tối), `styles/dialogs.css` (hộp thoại), `styles/form-controls.css` (dropdown, checkbox, ô tìm kiếm, mục mở rộng, thanh cuộn).
+- `styles/popup.css` (bố cục chính, biến màu sáng/tối), `styles/dialogs.css` (hộp thoại), `styles/form-controls.css` (dropdown, ô chọn ngân hàng, checkbox, ô tìm kiếm, mục mở rộng, thanh cuộn).
 - `src/vietqr-payload.js` — tạo chuỗi VietQR + CRC16.
 - `src/bank-list.js` — danh sách ngân hàng và mã BIN.
 - `src/storage.js` — lưu trữ `chrome.storage.local`, sao lưu/nhập.
@@ -44,7 +45,7 @@ Mở `http://localhost:5178/popup.html` (dữ liệu khi đó lưu ở localStor
 - `src/qr-modal.js` (chọn kiểu hộp thoại, kiểu cổ điển), `src/qr-card-modal.js` (kiểu "Thẻ VietQR"), `src/qr-dialog-core.js` (ô số tiền/nội dung và các nút dùng chung), `src/qr-print-card.js` (thẻ VietQR từ img.vietqr.io hoặc vẽ offline, chuyển thành PNG), `src/qr-image-renderer.js` (vẽ mã QR và ảnh kiểu cổ điển).
 - `src/text-utils.js` — bỏ dấu tiếng Việt, đọc số tiền, định dạng VND.
 - `src/popup-app.js` (trang chính), `src/account-book-changes.js` (thêm/sửa/xoá/nhập sao lưu), `src/popup-side-features.js` (xuất sao lưu, dòng trạng thái đồng bộ, nhận ảnh từ menu chuột phải).
-- `src/account-form.js` (form thêm/sửa), `src/account-form-fields.js` (chọn ngân hàng, nhóm, tên chủ TK), `src/account-form-scan.js` (thông báo quét, dán/kéo thả ảnh), `src/paste-account-parser.js`, `src/settings-modal.js`, `src/account-list-view.js`.
+- `src/account-form.js` (form thêm/sửa), `src/account-form-fields.js` (nhóm, tên chủ TK), `src/bank-combobox.js` (ô chọn ngân hàng), `src/account-form-scan.js` (thông báo quét, dán/kéo thả ảnh), `src/paste-account-parser.js`, `src/settings-modal.js`, `src/account-list-view.js`.
 - `src/vietqr-payload-parser.js`, `src/qr-image-decoder.js`, `src/qr-scan-sources.js`, `src/qr-scan-strip.js` — đọc mã QR để thêm tài khoản.
 - `src/holder-name-resolver.js`, `src/ocr-holder-name.js`, `src/vietqr-name-lookup.js` — lấy tên chủ tài khoản (OCR, VietQR.io).
 - `src/background.js` (service worker), `src/background-context-menu.js`, `src/background-context-menu-keys.js` — menu chuột phải quét QR.

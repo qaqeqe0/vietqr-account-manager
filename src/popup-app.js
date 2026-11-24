@@ -43,6 +43,7 @@ const handlers = {
   onAdd: (scanOptions = {}) => openAccountForm(null, {
     groups: state.settings.groups,
     accounts: state.accounts,
+    settings: state.settings,
     defaultGroup: [FILTER_ALL, FILTER_FAVORITE].includes(view.filter) ? undefined : view.filter,
     isPopup: !isTabView,
     onOpenTab: (hash) => openFullTab(hash),
@@ -56,6 +57,7 @@ const handlers = {
   onEdit: (account) => openAccountForm(account, {
     groups: state.settings.groups,
     accounts: state.accounts,
+    settings: state.settings,
     onSave: async (updated) => {
       await commit((current) => replaceAccount(current, account, updated));
       toast('Đã lưu');

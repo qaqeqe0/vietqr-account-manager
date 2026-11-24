@@ -1,7 +1,6 @@
-// Building blocks of the add / edit account dialog: labelled field wrapper, searchable
-// bank picker, group picker with "new group", and the holder-name input with lookup.
-import { BANKS, findBankByBin } from './bank-list.js';
-import { matchesQuery, normalizeAccountName } from './text-utils.js';
+// Building blocks of the add / edit account dialog: labelled field wrapper, group picker
+// with "new group", and the holder-name input with lookup. The bank picker is in bank-combobox.js.
+import { normalizeAccountName } from './text-utils.js';
 import { el, toast } from './ui-helpers.js';
 import { loadSyncConfig, isLookupReady } from './sync-config.js';
 import { lookupAccountName } from './vietqr-name-lookup.js';
@@ -10,45 +9,6 @@ const NEW_GROUP = '__new_group__';
 
 export function field(label, control, hint) {
   return el('label', { class: 'form-field' }, el('span', { class: 'form-label' }, label), control, hint ? el('span', { class: 'field-hint' }, hint) : null);
-}
-
-/**
- * Search box + select of banks. A BIN not in our list (e.g. from a scanned QR) stays
- * selectable as "BIN xxxxxx".
- * @returns {{node, search, select, value: () => string, setBin: (bin: string) => void}}
- */
-export function createBankPicker(initialBin) {
-  const search = el('input', { type: 'search', class: 'field-input', placeholder: 'Tìm ngân hàng: vcb, mb, vietin…' });
-  const select = el('select', { class: 'field-input', required: true });
-  let fallbackBin = initialBin;
-
-  function render(query = '') {
-    const selected = select.value || fallbackBin;
-    const matches = BANKS.filter((b) => b.bin === selected || matchesQuery(`${b.short} ${b.code} ${b.name} ${b.bin}`, query));
-    const unknown = selected && !findBankByBin(selected) ? [el('option', { value: selected, selected: true }, `BIN ${selected} (chưa có trong danh sách)`)] : [];
-    select.replaceChildren(
-      el('option', { value: '' }, '— Chọn ngân hàng —'),
-      ...unknown,
-      ...matches.map((b) => el('option', { value: b.bin, selected: b.bin === selected }, `${b.short} (${b.code})`)),
-    );
-    if (query && matches.length && !matches.some((b) => b.bin === selected)) select.value = matches[0].bin;
-  }
-  search.addEventListener('input', () => render(search.value));
-  render();
-
-  return {
-    node: el('div', { class: 'bank-picker' }, search, select),
-    search,
-    select,
-    value: () => select.value,
-    setBin(bin) {
-      search.value = '';
-      select.value = '';
-      fallbackBin = bin;
-      render();
-      select.value = bin;
-    },
-  };
 }
 
 /**

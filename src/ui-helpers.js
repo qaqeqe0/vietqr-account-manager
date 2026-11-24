@@ -73,6 +73,7 @@ export function openModal({ title, content, footer, onClose, wide = false, varia
   };
   const onKey = (event) => {
     if (event.key !== 'Escape') return;
+    if (event.target?.getAttribute?.('aria-expanded') === 'true') return; // Esc closes an open dropdown first
     if (host.lastElementChild !== backdrop) return; // only the top-most dialog closes (e.g. camera over form)
     event.preventDefault();
     close();
