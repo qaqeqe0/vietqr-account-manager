@@ -16,3 +16,15 @@ import '@shared/popup-app.js';
 
 // The floating "+" does exactly what the toolbar "Thêm tài khoản" button does.
 document.getElementById('btnAddFab').addEventListener('click', () => document.getElementById('btnAdd').click());
+
+// Popup: compact the pinned header while the list is scrolled. Two thresholds (on past
+// 40px, off near the top) stop it flickering, since shrinking the header moves the page.
+if (!document.body.classList.contains('tab-view')) {
+  const onScroll = () => {
+    const y = window.scrollY;
+    const on = document.body.classList.contains('is-scrolled');
+    if (!on && y > 40) document.body.classList.add('is-scrolled');
+    else if (on && y < 4) document.body.classList.remove('is-scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+}

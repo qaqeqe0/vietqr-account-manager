@@ -20,8 +20,9 @@
   @supports not selector(::-webkit-scrollbar) {
     * { scrollbar-width: thin; scrollbar-color: theme('colors.slate.300') transparent; }
   }
-  /* Toolbar popup: Chrome sizes it from the body. The full-tab view uses the whole page. */
-  body:not(.tab-view) { width: 420px; min-height: 560px; max-height: 600px; overflow-y: auto; }
+  /* Toolbar popup: Chrome sizes it from the body and caps it at 600px, then scrolls the page.
+     No max-height/overflow on the body: that stops sticky headers after the first 600px. */
+  body:not(.tab-view) { width: 420px; min-height: 560px; }
   body.tab-view { @apply min-h-screen; }
   [hidden] { display: none !important; }
   :focus-visible { @apply outline-none ring-2 ring-blue-500 ring-offset-1; }
@@ -74,6 +75,20 @@
   body:not(.tab-view) .list-title .sync-badge { @apply mt-0; }
   body:not(.tab-view) #groupChips { @apply mb-2; }
   body:not(.tab-view) .chip { @apply py-1 px-2.5 text-xs; }
+
+  /* Popup, once the list is scrolled (main.js sets body.is-scrolled): the navbar shrinks to
+     44px with a one-line title, the count line hides (the "Tất cả" chip still shows it),
+     and the pinned search + filters get a shadow so the list visibly slides under them. */
+  body:not(.tab-view) nav > .page-width,
+  body:not(.tab-view) .list-header,
+  body:not(.tab-view) .brand-icon,
+  body:not(.tab-view) .brand-kicker { transition: height 150ms ease, width 150ms ease, top 150ms ease, box-shadow 150ms ease; }
+  body.is-scrolled:not(.tab-view) nav > .page-width { @apply h-11; }
+  body.is-scrolled:not(.tab-view) .brand-icon { @apply w-7 h-7 text-sm; }
+  body.is-scrolled:not(.tab-view) .brand-kicker { @apply hidden; }
+  body.is-scrolled:not(.tab-view) .list-header { @apply top-11 pt-2 shadow-[0_6px_10px_-8px_rgba(15,23,42,0.35)]; }
+  body.is-scrolled:not(.tab-view) .list-title #accountCount { @apply hidden; }
+  body.is-scrolled:not(.tab-view) .list-title:not(:has(.sync-badge:not([hidden]))) { @apply hidden; }
 
   /* Compact rows (account-row-compact.js) */
   .account-grid.compact { @apply grid-cols-1 gap-2; }
