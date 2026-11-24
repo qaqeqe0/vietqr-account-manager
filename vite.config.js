@@ -69,6 +69,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         popup: resolve(ROOT, 'popup.html'),
+        options: resolve(ROOT, 'options.html'),
         background: join(SHARED_SRC, 'background.js'),
       },
       output: {
