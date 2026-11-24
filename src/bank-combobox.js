@@ -23,7 +23,7 @@ function rank(bank, query) {
 
 const optionLabel = (bin) => {
   const bank = findBankByBin(bin);
-  return bank ? `${bank.short} (${bank.code})` : `BIN ${bin} (chưa có trong danh sách)`;
+  return bank ? `${bank.short} (${bank.code.toUpperCase()})` : `BIN ${bin} (chưa có trong danh sách)`;
 };
 
 /**

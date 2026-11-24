@@ -8,6 +8,7 @@ import { FILTER_ALL, FILTER_FAVORITE, filterAccounts, allGroups, renderGroupChip
 import { openQrModal } from './qr-modal.js';
 import { openAccountForm } from './account-form.js';
 import { openSettingsModal } from './settings-modal.js';
+import { openDonateDialog } from './donate-coffee.js';
 import { bankLabel } from './bank-list.js';
 import { copyText } from './text-utils.js';
 import { ICONS, confirmDialog, toast } from './ui-helpers.js';
@@ -139,6 +140,11 @@ tabButton.innerHTML = ICONS.expand;
 tabButton.hidden = isTabView;
 tabButton.addEventListener('click', () => openFullTab());
 document.getElementById('btnSettings').innerHTML = ICONS.settings;
+const donateButton = document.getElementById('btnDonate');
+if (donateButton) {
+  donateButton.innerHTML = ICONS.coffee;
+  donateButton.addEventListener('click', () => openDonateDialog(state.settings));
+}
 document.getElementById('searchIcon').innerHTML = ICONS.search;
 dom.syncBadge.addEventListener('click', openSettings);
 

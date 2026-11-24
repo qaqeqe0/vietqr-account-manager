@@ -41,6 +41,8 @@ export const BANKS = [
   { bin: '963388', code: 'TIMO', short: 'Timo', name: 'Ngân hàng số Timo by Bản Việt Bank' },
   { bin: '971005', code: 'VIETTELMONEY', short: 'Viettel Money', name: 'Tổng Công ty Dịch vụ số Viettel' },
   { bin: '971011', code: 'VNPTMONEY', short: 'VNPT Money', name: 'VNPT Money' },
+  // MoMo's code is lower-case on VietQR.io (its logo URL is case-sensitive: img/momo.png).
+  { bin: '971025', code: 'momo', short: 'MoMo', name: 'Ví MoMo (CTCP Dịch Vụ Di Động Trực Tuyến)' },
   { bin: '970424', code: 'SHBVN', short: 'Shinhan Bank', name: 'Ngân hàng TNHH MTV Shinhan Việt Nam' },
   { bin: '970457', code: 'WVN', short: 'Woori Bank', name: 'Ngân hàng TNHH MTV Woori Việt Nam' },
   { bin: '970458', code: 'UOB', short: 'UOB', name: 'Ngân hàng United Overseas Bank Việt Nam' },

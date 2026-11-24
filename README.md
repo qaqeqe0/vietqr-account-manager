@@ -18,6 +18,7 @@ Quản lý số tài khoản ngân hàng và tạo mã VietQR chuyển khoản n
 - Thêm tài khoản bằng mã QR: quét mã VietQR đang hiện trên trang web, dán (⌘/Ctrl+V) hoặc kéo thả ảnh chụp mã QR, chọn ảnh, hoặc dùng camera. Tự điền ngân hàng, số TK, số tiền và nội dung mặc định. Tên chủ TK lấy theo thứ tự: tên trong mã QR (nếu ngân hàng có ghi) → đọc chữ in cạnh mã QR trên ảnh (OCR chạy ngay trên máy) → tra qua VietQR.io nếu bạn đã nhập API key. Nút "Tra tên" trong form cũng dùng VietQR.io; báo nếu tài khoản đã có trong sổ. Trong popup, "Chọn ảnh" và "Camera" mở toàn tab vì Chrome đóng popup khi mở hộp chọn file.
 - Đồng bộ Google Sheet (qua Apps Script của bạn; dữ liệu ghi vào tab "TaiKhoan" của Google Sheet bạn chọn trong Cài đặt, hoặc Sheet chứa script, hoặc file tự tạo "Sổ tài khoản VietQR (dữ liệu)" nếu script tạo riêng — tên file và link luôn hiện sau mỗi lần đồng bộ) và/hoặc Google Drive (file `so-tai-khoan-vietqr.json`): tự động sau mỗi thay đổi, khi mở popup và mỗi 30 phút, kèm nút "Đồng bộ ngay". Bản sửa mới hơn được giữ, tài khoản đã xoá không bị khôi phục lại. Thiết lập trong Cài đặt (mở toàn tab).
 - Dropdown, checkbox, ô tìm kiếm, mục mở rộng và thanh cuộn được vẽ theo giao diện của tiện ích (không dùng kiểu mặc định của trình duyệt), theo cả chế độ sáng và tối.
+- Nút ☕ trên thanh trên cùng: "Mời tác giả một ly cà phê", mở mã VietQR ví MoMo của tác giả (gợi ý 25k/50k/100k). Tài khoản này không nằm trong sổ của bạn, không đồng bộ và không lưu lịch sử.
 - Xuất/nhập file JSON để sao lưu. Mẫu nội dung hỗ trợ `{toi}`, `{nguoinhan}`, `{thang}`, `{ngay}`.
 
 ## Cài đặt
@@ -43,6 +44,7 @@ Mở `http://localhost:5178/popup.html` (dữ liệu khi đó lưu ở localStor
 - `src/storage.js` — lưu trữ `chrome.storage.local`, sao lưu/nhập.
 - `src/suggestion-engine.js` — gợi ý số tiền/nội dung cho nút chọn nhanh.
 - `src/qr-modal.js` (chọn kiểu hộp thoại, kiểu cổ điển), `src/qr-card-modal.js` (kiểu "Thẻ VietQR"), `src/qr-dialog-core.js` (ô số tiền/nội dung và các nút dùng chung), `src/qr-print-card.js` (thẻ VietQR từ img.vietqr.io hoặc vẽ offline, chuyển thành PNG), `src/qr-image-renderer.js` (vẽ mã QR và ảnh kiểu cổ điển).
+- `src/donate-coffee.js` — nút mời cà phê (ví MoMo của tác giả).
 - `src/text-utils.js` — bỏ dấu tiếng Việt, đọc số tiền, định dạng VND.
 - `src/popup-app.js` (trang chính), `src/account-book-changes.js` (thêm/sửa/xoá/nhập sao lưu), `src/popup-side-features.js` (xuất sao lưu, dòng trạng thái đồng bộ, nhận ảnh từ menu chuột phải).
 - `src/account-form.js` (form thêm/sửa), `src/account-form-fields.js` (nhóm, tên chủ TK), `src/bank-combobox.js` (ô chọn ngân hàng), `src/account-form-scan.js` (thông báo quét, dán/kéo thả ảnh), `src/paste-account-parser.js`, `src/settings-modal.js`, `src/account-list-view.js`.
