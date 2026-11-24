@@ -1,0 +1,69 @@
+/* Form controls and scrollbars drawn in the extension's own look (purple accent, soft
+   borders, light and dark themes) instead of the browser defaults. Loaded after
+   popup.css (tokens) and dialogs.css (.field-input, .check-row, .more-options). */
+
+/* Scrollbars: thin, rounded thumb on a clear track. */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border); border-radius: 999px;
+  border: 3px solid transparent; background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background-color: var(--muted); }
+/* Browsers without the pseudo-elements above (Firefox) use the standard properties. */
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+}
+
+/* Dropdowns: no native look; a muted chevron on the right. */
+select.field-input {
+  appearance: none; -webkit-appearance: none; padding-right: 36px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%236b6886' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; background-size: 18px;
+}
+select.field-input:hover { border-color: var(--accent-2); }
+select.field-input:disabled { background-color: var(--surface-2); color: var(--muted); cursor: not-allowed; }
+select.field-input option { background: var(--surface); color: var(--text); }
+
+/* Search boxes: a muted "x" in place of the native clear button. */
+input[type='search']::-webkit-search-cancel-button {
+  -webkit-appearance: none; width: 16px; height: 16px; cursor: pointer; opacity: .7;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%236b6886' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 6 8 8M14 6l-8 8'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+input[type='search']::-webkit-search-cancel-button:hover { opacity: 1; }
+
+/* Checkboxes: rounded box, accent fill with a white tick; aligned to the label's first line. */
+.check-row { align-items: flex-start; cursor: pointer; user-select: none; }
+.check-row input[type='checkbox'] {
+  appearance: none; -webkit-appearance: none; flex: none; width: 16px; height: 16px; margin: 1px 0 0;
+  border: 1.5px solid var(--border); border-radius: 5px; background: var(--surface) center / 100% no-repeat;
+  cursor: pointer; transition: background-color .15s, border-color .15s;
+}
+.check-row input[type='checkbox']:hover { border-color: var(--accent-2); }
+.check-row input[type='checkbox']:checked {
+  background-color: var(--accent-2); border-color: var(--accent-2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 8.5 2.5 2.5L12 5.5'/%3E%3C/svg%3E");
+}
+.check-row input[type='checkbox']:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Expandable sections: the same chevron as the dropdowns, right when closed, down when open. */
+.more-options summary, .sync-card summary { list-style: none; display: inline-flex; align-items: center; gap: 6px; user-select: none; }
+.more-options summary::-webkit-details-marker, .sync-card summary::-webkit-details-marker { display: none; }
+.more-options summary::before, .sync-card summary::before {
+  content: ''; flex: none; width: 16px; height: 16px; transform: rotate(-90deg); transition: transform .15s;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.more-options[open] summary::before, .sync-card[open] summary::before { transform: none; }
+
+@media (prefers-color-scheme: dark) {
+  select.field-input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23a09cbd' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+  }
+  input[type='search']::-webkit-search-cancel-button {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23a09cbd' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 6 8 8M14 6l-8 8'/%3E%3C/svg%3E");
+  }
+  .check-row input[type='checkbox']:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2315132b' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 8.5 2.5 2.5L12 5.5'/%3E%3C/svg%3E");
+  }
+}

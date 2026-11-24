@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sổ tài khoản VietQR</title>
+  <link rel="stylesheet" href="styles/popup.css">
+  <link rel="stylesheet" href="styles/dialogs.css">
+  <link rel="stylesheet" href="styles/form-controls.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <img src="icons/icon-48.png" alt="" width="30" height="30">
+        <div>
+          <h1>Sổ tài khoản VietQR</h1>
+          <span id="accountCount" class="muted">Đang tải…</span>
+          <button id="syncStatus" class="sync-badge" type="button" hidden></button>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button id="btnOpenTab" class="icon-btn" type="button" title="Mở toàn màn hình" aria-label="Mở toàn màn hình"></button>
+        <button id="btnSettings" class="icon-btn" type="button" title="Cài đặt" aria-label="Cài đặt"></button>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <label class="search">
+        <span id="searchIcon" class="search-icon"></span>
+        <input id="searchInput" type="search" placeholder="Tìm tên, số TK, ngân hàng, ghi chú… ( / )" autocomplete="off">
+      </label>
+      <button id="btnAdd" class="btn btn-primary" type="button">+ Thêm</button>
+    </div>
+
+    <nav id="groupChips" class="chips" aria-label="Lọc theo nhóm"></nav>
+    <main id="accountList" class="list"></main>
+  </div>
+
+  <div id="modalRoot"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="lib/qrcode.js"></script>
+  <script type="module" src="src/popup-app.js"></script>
+</body>
+</html>
