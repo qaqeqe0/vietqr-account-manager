@@ -6,7 +6,7 @@ import { normalizeAccountName } from './text-utils.js';
 import { createSyncSettingsPanel } from './sync-settings-panel.js';
 import { VIETQR_IMAGE_ORIGINS } from './qr-print-card.js';
 
-const PRIVACY_URL = 'https://qaqeqe0.github.io/so-tai-khoan-qr-privacy/';
+const PRIVACY_URL = 'https://qaqeqe0.github.io/so-tai-khoan-qr/privacy/';
 
 /** "Phiên bản x.y.z · Chính sách quyền riêng tư" at the bottom of Settings. */
 function aboutLine() {
