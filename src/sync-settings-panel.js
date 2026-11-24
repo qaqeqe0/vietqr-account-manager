@@ -138,7 +138,7 @@ export async function createSyncSettingsPanel({ isPopup, onOpenTab }) {
     row(copyScript, rotate),
     el('label', { class: 'form-field' }, el('span', { class: 'form-label' }, 'Link web app (Web app URL)'), row(sheetUrl, saveAndSync)),
     el('label', { class: 'form-field' }, el('span', { class: 'form-label' }, 'Google Sheet lưu dữ liệu (tuỳ chọn)'), row(targetUrl, saveTarget),
-      el('span', { class: 'field-hint' }, 'Dán link Google Sheet của bạn để ghi vào đó (tab “TaiKhoan”). Để trống: ghi vào Sheet chứa Apps Script, hoặc file “Sổ tài khoản VietQR (dữ liệu)” nếu script tạo riêng.')),
+      el('span', { class: 'field-hint' }, 'Dán link Google Sheet của bạn để ghi vào đó (tab “TaiKhoan”). Để trống: ghi vào Sheet chứa Apps Script, hoặc file “Sổ tài khoản QR chuyển khoản (dữ liệu)” nếu script tạo riêng.')),
     sheetLink,
     el('p', { class: 'field-hint' }, 'Mỗi tài khoản là một dòng trong sheet “TaiKhoan”; sửa trên sheet cũng được đồng bộ về. Xoá tài khoản hãy xoá trong tiện ích.'));
 

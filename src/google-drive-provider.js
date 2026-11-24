@@ -130,7 +130,7 @@ export async function pushToDrive(drive, snapshot, fileId) {
   const boundary = `vietqr${Date.now()}`;
   const multipart = [
     `--${boundary}`, 'Content-Type: application/json; charset=UTF-8', '',
-    JSON.stringify({ name: FILE_NAME, mimeType: 'application/json', description: 'Sổ tài khoản VietQR (tiện ích Chrome)' }),
+    JSON.stringify({ name: FILE_NAME, mimeType: 'application/json', description: 'Sổ tài khoản QR chuyển khoản (tiện ích Chrome)' }),
     `--${boundary}`, 'Content-Type: application/json', '', body, `--${boundary}--`,
   ].join('\r\n');
   const response = await driveFetch(token, `${UPLOAD}?uploadType=multipart&fields=id`, {

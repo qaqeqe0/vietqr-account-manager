@@ -1,5 +1,5 @@
 /**
- * Sổ tài khoản VietQR — đồng bộ với Google Sheet.
+ * Sổ tài khoản QR chuyển khoản — đồng bộ với Google Sheet.
  *
  * Cách dùng: Extensions → Apps Script trong Google Sheet của bạn, dán toàn bộ file này
  * (tiện ích đã điền sẵn SECRET), bấm Deploy → New deployment → Web app,
@@ -8,7 +8,7 @@
  * Dữ liệu được ghi vào đâu (theo thứ tự ưu tiên):
  *  1. Google Sheet bạn dán link trong tiện ích (Cài đặt → "Google Sheet lưu dữ liệu");
  *  2. Google Sheet chứa script này (nếu tạo từ Extensions → Apps Script);
- *  3. nếu script tạo riêng ở script.google.com: file mới "Sổ tài khoản VietQR (dữ liệu)".
+ *  3. nếu script tạo riêng ở script.google.com: file mới "Sổ tài khoản QR chuyển khoản (dữ liệu)".
  * Tên file và link luôn hiện trong tiện ích sau mỗi lần đồng bộ.
  *
  * Tab "TaiKhoan": mỗi dòng một tài khoản, xem và sửa trực tiếp được (cột "capNhatLuc"
@@ -82,7 +82,7 @@ function resolveBook() {
   if (id) {
     try { return SpreadsheetApp.openById(id); } catch (err) { /* deleted: create a new one */ }
   }
-  const book = SpreadsheetApp.create('Sổ tài khoản VietQR (dữ liệu)');
+  const book = SpreadsheetApp.create('Sổ tài khoản QR chuyển khoản (dữ liệu)');
   book.getSheets()[0].setName(SHEET_ACCOUNTS); // reuse the default empty sheet
   props.setProperty('SPREADSHEET_ID', book.getId());
   return book;

@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Sổ tài khoản VietQR",
-  "short_name": "VietQR Sổ TK",
-  "version": "1.2.3",
+  "name": "Sổ tài khoản QR chuyển khoản",
+  "short_name": "Sổ TK QR",
+  "version": "1.2.4",
   "description": "Quản lý số tài khoản ngân hàng, tạo mã VietQR chuyển khoản offline với gợi ý số tiền và nội dung, tìm kiếm và lọc theo nhóm.",
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Sổ tài khoản VietQR",
+    "default_title": "Sổ tài khoản QR chuyển khoản",
     "default_icon": {
       "16": "icons/icon-16.png",
       "32": "icons/icon-32.png",
@@ -32,7 +32,7 @@
       "suggested_key": {
         "default": "Alt+Shift+Q"
       },
-      "description": "Mở Sổ tài khoản VietQR"
+      "description": "Mở Sổ tài khoản QR chuyển khoản"
     }
   },
   "optional_host_permissions": [
