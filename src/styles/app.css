@@ -1,0 +1,247 @@
+/* Tailwind look for the extension: Inter, slate neutrals, blue-600 accent, rounded cards,
+   blurred modal backdrop. Class names below are produced by the shared logic modules
+   (../vietqr-account-manager-extension/src) and are mapped to the new style with @apply. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body { @apply bg-slate-50; }
+  /* Native pop-ups (dropdown lists, date pickers) follow the light page. */
+  html { color-scheme: light; }
+
+  /* Scrollbars: thin, rounded slate thumb on a clear track, like the rest of the page. */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-slate-300 rounded-full; border: 3px solid transparent; background-clip: padding-box; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-slate-400; }
+  ::-webkit-scrollbar-corner { background: transparent; }
+  /* Browsers without the pseudo-elements above (Firefox) use the standard properties. */
+  @supports not selector(::-webkit-scrollbar) {
+    * { scrollbar-width: thin; scrollbar-color: theme('colors.slate.300') transparent; }
+  }
+  /* Toolbar popup: Chrome sizes it from the body. The full-tab view uses the whole page. */
+  body:not(.tab-view) { width: 420px; min-height: 560px; max-height: 600px; overflow-y: auto; }
+  body.tab-view { @apply min-h-screen; }
+  [hidden] { display: none !important; }
+  :focus-visible { @apply outline-none ring-2 ring-blue-500 ring-offset-1; }
+  .mono { @apply font-mono; }
+}
+
+@layer components {
+  .page-width { @apply w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8; }
+  .hide-scroll { scrollbar-width: none; }
+  .hide-scroll::-webkit-scrollbar { display: none; }
+
+  /* Buttons */
+  .btn { @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors whitespace-nowrap disabled:opacity-50; }
+  .btn-primary { @apply bg-blue-600 text-white hover:bg-blue-700 shadow-sm; }
+  .btn-ghost { @apply bg-white border border-slate-300 text-slate-700 hover:bg-slate-50; }
+  .btn-text { @apply text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-3; }
+  .btn-danger { @apply bg-red-600 text-white hover:bg-red-700 shadow-sm; }
+  .icon-btn { @apply inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors; }
+  .nav-icon { @apply inline-flex items-center justify-center w-9 h-9 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors; }
+  .link-btn { @apply text-xs font-medium text-blue-600 hover:text-blue-800 underline underline-offset-2; }
+
+  /* Group chips */
+  .chip { @apply shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:text-blue-700 transition-colors; }
+  .chip.active { @apply bg-blue-600 border-blue-600 text-white; }
+  .chip-count { @apply text-xs opacity-70 font-semibold; }
+
+  /* Navbar "Thêm tài khoản": full label on wide tab view, icon-only "+" in the popup. */
+  .nav-add { @apply hidden md:inline-flex; }
+  .nav-add-label { @apply hidden md:inline; }
+  body:not(.tab-view) .nav-add { @apply inline-flex w-9 h-9 p-0; }
+  body:not(.tab-view) #btnAddFab { @apply hidden; }
+
+  /* Popup: compact header pinned under the navbar; the list scrolls beneath it. */
+  body:not(.tab-view) main { @apply pt-0 pb-4; }
+  body:not(.tab-view) .list-header { @apply sticky top-14 z-20 -mx-3 px-3 pt-3 bg-slate-50/95 backdrop-blur-sm; }
+  body:not(.tab-view) .list-header > div:first-child { @apply mb-2 gap-2; }
+  body:not(.tab-view) .list-title h1 { @apply hidden; }
+  body:not(.tab-view) .list-title { @apply flex items-baseline gap-2; }
+  body:not(.tab-view) .list-title #accountCount { @apply mt-0 text-xs shrink-0; }
+  body:not(.tab-view) .list-title .sync-badge { @apply mt-0; }
+  body:not(.tab-view) #groupChips { @apply mb-2; }
+  body:not(.tab-view) .chip { @apply py-1 px-2.5 text-xs; }
+
+  /* Compact rows (account-row-compact.js) */
+  .account-grid.compact { @apply grid-cols-1 gap-2; }
+  .account-row { @apply relative flex items-center gap-3 py-2.5 pl-2.5 pr-1.5 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-blue-300 transition-colors; }
+  .row-avatar { @apply w-10 h-10 shrink-0 rounded-xl flex items-center justify-center text-white text-base font-bold shadow-sm; }
+  .row-main { @apply block w-full min-w-0 text-left; }
+  .row-star { @apply shrink-0 inline-flex items-center justify-center w-6 h-6 -my-1 rounded-md text-[13px] text-slate-300 hover:text-amber-500 hover:bg-amber-50 transition-colors; }
+  .row-star.is-fav { @apply text-amber-400; }
+  .row-icon { @apply inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors; }
+  .row-qr { @apply inline-flex items-center justify-center w-9 h-9 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors; }
+  .row-menu { @apply absolute right-1.5 top-full -mt-1 z-30 min-w-[150px] py-1 bg-white rounded-lg border border-slate-200 shadow-lg; }
+  .row-menu-item { @apply w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 text-left; }
+  .row-menu-item.danger { @apply text-red-600 hover:bg-red-50; }
+
+  /* Account cards */
+  .account-grid { @apply grid grid-cols-1 gap-4; }
+  body.tab-view .account-grid { @apply md:grid-cols-2 lg:grid-cols-3 md:gap-6; }
+  .account-card { @apply bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow flex flex-col; }
+  .card-thumb { @apply relative w-20 h-20 shrink-0 bg-white rounded-lg p-0.5 border border-slate-100 overflow-hidden flex items-end justify-center; }
+  /* VietQR card picture: faded and slightly blurred until the card is hovered or focused. */
+  .card-thumb-image { @apply w-full h-full object-contain object-bottom opacity-60 blur-[1.5px] transition duration-200 group-hover:opacity-100 group-hover:blur-0 group-focus-within:opacity-100 group-focus-within:blur-0; }
+  /* VietQR.io logos are wide (about 8:3): fixed height, width follows. */
+  .bank-logo { @apply shrink-0 h-5 w-auto max-w-[56px] object-contain rounded-sm bg-white; }
+  /* Full-tab card: the bank logo sits centred above the QR picture, level with the bank name. */
+  .card-logo-badge { @apply absolute top-0 left-1/2 -translate-x-1/2 z-10 h-6 max-w-[64px] px-1 py-0.5 rounded-md border border-slate-200 shadow-sm; }
+  .card-thumb canvas { @apply opacity-90 group-hover:opacity-100 transition-opacity; }
+  .card-thumb-overlay { @apply absolute inset-0 flex items-center justify-center bg-black/10 text-white opacity-0 group-hover:opacity-100 transition-opacity; }
+  .card-icon { @apply text-slate-400 transition-colors; }
+  .card-icon.is-fav { @apply text-amber-400 hover:text-amber-500; }
+  .tag { @apply shrink-0 text-xs font-medium px-2 py-0.5 rounded-md bg-blue-50 text-blue-700; }
+  .empty-state { @apply col-span-full flex flex-col items-center justify-center py-16 text-center; }
+  .sync-badge { @apply block mt-1 text-xs text-left text-slate-500 hover:underline max-w-full truncate; }
+  .sync-badge.ok { @apply text-green-600; }
+  .sync-badge.err { @apply text-red-600; }
+
+  /* Modal shell (ui-helpers.openModal) */
+  .backdrop { @apply fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 bg-slate-900/50 backdrop-blur-sm; animation: fade-in 200ms ease-out; }
+  .modal { @apply w-full max-w-lg max-h-[calc(100vh-24px)] flex flex-col bg-white rounded-2xl shadow-2xl overflow-hidden text-left; animation: pop-in 200ms ease-out; }
+  .modal-head { @apply flex justify-between items-start gap-3 px-5 sm:px-6 pt-5 pb-3; }
+  .modal-head h2 { @apply text-lg sm:text-xl font-bold text-slate-900 leading-snug; }
+  .modal-x { @apply text-xl -mr-1; }
+  .modal-body { @apply px-5 sm:px-6 pb-4 overflow-y-auto; }
+  .modal-foot { @apply flex flex-wrap items-center justify-end gap-2 sm:gap-3 px-5 sm:px-6 py-4 border-t border-slate-100; }
+  .foot-left, .foot-right { @apply flex gap-2; }
+  .foot-left { @apply mr-auto; }
+  /* Four actions must fit one row in the 420px toolbar popup. */
+  .foot-left .btn, .foot-right .btn { @apply px-3 py-2; }
+  body:not(.tab-view) .modal-foot .btn { @apply px-2.5 text-xs gap-1.5; }
+  body:not(.tab-view) .modal-foot { @apply flex-nowrap gap-1.5 px-4; }
+  body:not(.tab-view) .backdrop { @apply p-2; }
+  .confirm-text { @apply text-slate-600; }
+
+  /* Form controls */
+  .field-input { @apply block w-full px-3 py-2.5 border border-slate-300 rounded-lg bg-white text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow; }
+  textarea.field-input { @apply resize-y; }
+  /* Dropdowns: no native look; a slate chevron in the same place as other field icons. */
+  select.field-input {
+    @apply appearance-none pr-9 cursor-pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%2394a3b8' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.1rem;
+  }
+  select.field-input:hover { @apply border-slate-400; }
+  select.field-input:disabled { @apply bg-slate-50 text-slate-400 cursor-not-allowed; }
+  select.field-input option { @apply text-slate-900 bg-white; }
+  /* Search boxes: replace the native clear button with a slate "x" that matches the icons. */
+  input[type='search'].field-input::-webkit-search-cancel-button,
+  #searchInput::-webkit-search-cancel-button {
+    -webkit-appearance: none; @apply h-4 w-4 cursor-pointer opacity-60 hover:opacity-100;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 6 8 8M14 6l-8 8'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  .field-input.upper { @apply uppercase; }
+  .field-hint { @apply block mt-1 text-xs text-slate-500; }
+  .field-hint.warn { @apply text-amber-600; }
+  .form-field { @apply flex flex-col gap-1; }
+  .form-label { @apply text-sm font-medium text-slate-700; }
+  .account-form { @apply flex flex-col gap-4; }
+  .account-form.drop-target { @apply outline-dashed outline-2 outline-offset-4 outline-blue-400 rounded-xl; }
+  .form-grid { @apply grid gap-4; }
+  .bank-picker, .stack { @apply grid gap-2; }
+  .name-row, .inline-row { @apply flex flex-wrap items-center gap-2; }
+  .name-row .field-input, .inline-row .field-input { @apply flex-1 min-w-0 w-auto; }
+  .paste-box { @apply border-dashed bg-slate-50; }
+  .more-options summary { @apply cursor-pointer text-sm font-semibold text-blue-600 mb-3 list-none inline-flex items-center gap-1.5 select-none; }
+  .more-options summary::-webkit-details-marker, .sync-card summary::-webkit-details-marker { display: none; }
+  .sync-card summary { @apply list-none inline-flex items-center gap-1.5 select-none; }
+  /* Same chevron as the dropdowns (in the text colour), right when closed, down when open. */
+  .more-options summary::before, .sync-card summary::before {
+    content: ''; @apply w-4 h-4 shrink-0 -rotate-90 transition-transform bg-current;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 8 4 4 4-4'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  .more-options[open] summary::before, .sync-card[open] summary::before { @apply rotate-0; }
+  .check-row { @apply flex items-start gap-2 text-sm text-slate-700; }
+  /* Checkboxes drawn like the page: rounded slate box, blue fill with a white tick. */
+  .check-row { @apply cursor-pointer select-none; }
+  .check-row input[type='checkbox'] {
+    @apply appearance-none shrink-0 mt-0.5 w-4 h-4 rounded border border-slate-300 bg-white cursor-pointer transition-colors
+      hover:border-blue-500 checked:bg-blue-600 checked:border-blue-600 disabled:opacity-50;
+    background-repeat: no-repeat; background-position: center; background-size: 100%;
+  }
+  .check-row input[type='checkbox']:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 8.5 2.5 2.5L12 5.5'/%3E%3C/svg%3E");
+  }
+
+  /* QR dialog (shared qr-modal.js) */
+  .qr-sheet { @apply flex flex-col items-center; }
+  .qr-box { @apply bg-white p-2 rounded-xl border border-slate-100 shadow-[0_0_15px_rgba(0,0,0,0.1)] min-h-[120px] flex items-center justify-center; }
+  .qr-canvas { image-rendering: pixelated; @apply rounded-lg; }
+  .qr-error { @apply text-sm text-red-600 text-center max-w-[220px]; }
+  .qr-owner { @apply mt-4 text-xl font-bold text-slate-900 text-center uppercase; }
+  .qr-bankline { @apply flex items-center gap-1 text-sm text-slate-500; }
+  .mini-copy { @apply text-blue-600 hover:text-blue-800 p-1 rounded transition-colors; }
+  .qr-sheet .field { @apply w-full mt-4 bg-slate-50 rounded-xl p-3 border border-slate-100; }
+  .amount-wrap { @apply relative; }
+  .amount-wrap .field-input { @apply pr-9; }
+  .suffix { @apply absolute right-3 top-1/2 -translate-y-1/2 text-blue-600 font-bold underline pointer-events-none; }
+  .quick-chips { @apply flex flex-wrap gap-1.5 mt-2; }
+  .qchip { @apply max-w-full truncate px-2.5 py-1 rounded-full text-xs font-medium border border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:text-blue-700 transition-colors; }
+  .qchip.on { @apply bg-blue-50 border-blue-300 text-blue-700; }
+  /* The first footer action of the QR dialog ("Tải ảnh QR") is the main one. */
+  .foot-right .btn-text:first-child { @apply bg-blue-600 text-white hover:bg-blue-700 hover:text-white shadow-sm px-4; }
+
+  /* "Thẻ VietQR" layout of the QR dialog (qr-card-modal.js), as in the design sample */
+  .modal-qrc { @apply relative; }
+  .modal-qrc .modal-head { @apply absolute top-3 right-3 p-0 z-10; }
+  .modal-qrc .modal-head h2 { @apply sr-only; }
+  .qrc-sheet { @apply flex flex-col items-center gap-4 pt-4; }
+  .qrc-head { @apply text-center; }
+  .qrc-bank { @apply text-2xl font-bold text-slate-900; }
+  .qrc-holder { @apply mt-0.5 text-sm text-slate-500 uppercase; }
+  .qrc-card { @apply relative w-64 min-h-[200px] p-2 grid place-items-center bg-white rounded-xl border border-slate-100 shadow-[0_0_15px_rgba(0,0,0,0.1)]; }
+  .qrc-image { @apply block w-full h-auto rounded-lg; }
+  .qrc-loader { @apply absolute inset-0 grid place-items-center bg-white/80 rounded-xl; }
+  .qrc-spinner { @apply w-7 h-7 rounded-full border-[3px] border-blue-100 border-t-blue-600 animate-spin; }
+  .qrc-note { @apply -mt-2 text-xs text-amber-600 text-center; }
+  .qrc-panel { @apply w-full grid gap-1.5 p-4 bg-slate-50 rounded-xl border border-slate-100; }
+  .qrc-row { @apply flex justify-between items-center mb-1; }
+  .qrc-label { @apply text-sm text-slate-500; }
+  .qrc-number { @apply flex items-center gap-2 text-lg font-bold text-slate-900; }
+  .qrc-copy { @apply text-blue-600 hover:text-blue-800 p-1 rounded transition-colors; }
+  .qrc-panel .field-hint { @apply mt-0; }
+  .modal-qrc .modal-foot { @apply flex-col items-stretch gap-2; }
+  .qrc-download { @apply w-full py-3 text-base rounded-xl; }
+  .qrc-secondary { @apply flex justify-center gap-5; }
+  body:not(.tab-view) .modal-qrc .modal-foot .btn.qrc-download { @apply text-sm py-3; }
+
+  /* Scan strip and camera */
+  .scan-strip { @apply grid gap-2 p-3 rounded-xl bg-blue-50 border border-blue-100; }
+  .scan-title { @apply text-sm font-semibold text-blue-700; }
+  .scan-buttons { @apply flex flex-wrap gap-2; }
+  .scan-btn { @apply py-1.5 px-3 text-xs; }
+  .scan-status { @apply text-xs font-medium text-slate-700; }
+  .scan-status.ok { @apply text-green-700; }
+  .scan-status.err { @apply text-red-600; }
+  .camera-box { @apply relative grid gap-2; }
+  .camera-video { @apply w-full aspect-[4/3] object-cover rounded-xl bg-black; }
+  .camera-frame { @apply absolute top-[12%] left-1/2 -translate-x-1/2 w-[56%] aspect-square border-[3px] border-white/85 rounded-2xl pointer-events-none; box-shadow: 0 0 0 999px rgba(0, 0, 0, .25); }
+  .camera-status { @apply text-center; }
+
+  /* Settings: backup, sync, lookup */
+  .backup-row { @apply flex flex-col gap-2; }
+  .backup-actions { @apply flex flex-wrap gap-2; }
+  .sync-panel { @apply grid gap-3 pt-3 border-t border-slate-100; }
+  .sync-head { @apply grid gap-2; }
+  .sync-card { @apply grid gap-3 border border-slate-200 rounded-xl p-4; }
+  .sync-card summary { @apply cursor-pointer font-semibold text-slate-800; }
+  .steps { @apply list-decimal pl-5 grid gap-1 text-xs text-slate-500; }
+  .steps b { @apply text-slate-800; }
+
+  /* Toast (ui-helpers.toast) */
+  .toast { @apply fixed bottom-24 md:bottom-5 right-5 z-[60] flex items-center gap-3 max-w-[90vw] bg-slate-900 text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium translate-y-20 opacity-0 pointer-events-none transition-all duration-300; }
+  .toast.show { @apply translate-y-0 opacity-100; }
+}
+
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes pop-in { from { opacity: 0; transform: scale(0.95); } }
+@media (prefers-reduced-motion: reduce) {
+  .backdrop, .modal { animation: none; }
+  .toast { transition: none; }
+}

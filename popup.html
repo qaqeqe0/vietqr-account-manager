@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sổ tài khoản VietQR</title>
+</head>
+<body class="text-slate-800 antialiased bg-slate-50 font-sans">
+  <!-- Element ids match the shared popup-app.js; only the look differs from the plain version. -->
+  <nav class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="page-width flex justify-between items-center h-14 md:h-16">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="bg-blue-600 text-white w-9 h-9 rounded-lg flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-qrcode text-lg"></i>
+        </div>
+        <span class="font-bold text-lg md:text-xl tracking-tight text-slate-900 truncate">Sổ tài khoản VietQR</span>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <button id="btnOpenTab" class="nav-icon" type="button" title="Mở toàn màn hình" aria-label="Mở toàn màn hình"></button>
+        <button id="btnSettings" class="nav-icon" type="button" title="Cài đặt" aria-label="Cài đặt"></button>
+        <button id="btnAdd" class="btn btn-primary nav-add ml-1" type="button" title="Thêm tài khoản" aria-label="Thêm tài khoản">
+          <i class="fa-solid fa-plus"></i><span class="nav-add-label">Thêm tài khoản</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-width py-4 md:py-8 pb-24 md:pb-10">
+    <!-- In the popup this block stays pinned under the navbar while the list scrolls. -->
+    <div class="list-header">
+    <div class="mb-4 md:mb-6 flex flex-col md:flex-row md:items-end justify-between gap-3">
+      <div class="min-w-0 list-title">
+        <h1 class="text-xl md:text-2xl font-bold text-slate-900">Tài khoản của tôi</h1>
+        <p id="accountCount" class="text-slate-500 mt-0.5 text-sm">Đang tải…</p>
+        <button id="syncStatus" class="sync-badge" type="button" hidden></button>
+      </div>
+      <label class="relative w-full md:w-80 block">
+        <span id="searchIcon" class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400"></span>
+        <input id="searchInput" type="search" autocomplete="off"
+          placeholder="Tìm tên, số TK, ngân hàng, ghi chú… ( / )"
+          class="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-lg bg-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow">
+      </label>
+    </div>
+
+    <nav id="groupChips" class="flex gap-2 overflow-x-auto hide-scroll pb-1 mb-4 md:mb-6" aria-label="Lọc theo nhóm"></nav>
+    </div>
+    <div id="accountList" class="account-grid"></div>
+  </main>
+
+  <!-- Floating add button on narrow full-tab screens (the popup has "+" in the navbar). -->
+  <button id="btnAddFab" type="button" aria-label="Thêm tài khoản" title="Thêm tài khoản"
+    class="md:hidden fixed bottom-5 right-5 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center text-2xl hover:bg-blue-700 active:scale-95 transition-transform z-40">
+    <i class="fa-solid fa-plus"></i>
+  </button>
+
+  <div id="modalRoot"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="lib/qrcode.js"></script>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
