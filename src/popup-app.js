@@ -1,22 +1,22 @@
 // Entry point: loads the account book, wires search / group filter / list actions and the
-// dialogs. State changes are in account-book-changes.js; backup download, the sync status
-// line and right-click scan pickup are in popup-side-features.js.
+// dialogs. Settings are on the options page (settings-page.js). State changes are in
+// account-book-changes.js; the sync status line and right-click scan pickup are in
+// popup-side-features.js.
 import { loadState, updateState, mergeState, STORAGE_KEY } from './storage.js';
 import { stateFingerprint } from './sync-merge.js';
 import { loadSyncConfig, hasAnySyncTarget, SYNC_CONFIG_KEY } from './sync-config.js';
 import { FILTER_ALL, FILTER_FAVORITE, filterAccounts, allGroups, renderGroupChips, renderAccountList } from './account-list-view.js';
 import { openQrModal } from './qr-modal.js';
 import { openAccountForm } from './account-form.js';
-import { openSettingsModal } from './settings-modal.js';
 import { openDonateDialog } from './donate-coffee.js';
 import { bankLabel } from './bank-list.js';
 import { copyText } from './text-utils.js';
 import { ICONS, confirmDialog, toast } from './ui-helpers.js';
 import { imageFromDataTransfer } from './qr-scan-sources.js';
 import {
-  addAccount, replaceAccount, removeAccount, patchAccount, usagePatch, applySettings, mergeBackup,
+  addAccount, replaceAccount, removeAccount, patchAccount, usagePatch,
 } from './account-book-changes.js';
-import { downloadBackup, renderSyncStatus, takePendingScan } from './popup-side-features.js';
+import { renderSyncStatus, takePendingScan } from './popup-side-features.js';
 
 const isExtension = typeof chrome !== 'undefined' && !!chrome.runtime?.id;
 const isTabView = new URLSearchParams(location.search).get('view') === 'tab' || !isExtension;
@@ -106,31 +106,12 @@ function openFullTab(hash = '') {
   } else window.open(path, '_blank');
 }
 
-async function importBackup(file) {
-  try {
-    const parsed = JSON.parse(await file.text());
-    let result;
-    await commit((current) => {
-      result = mergeBackup(current, parsed);
-      return result.next;
-    });
-    toast(`Đã nhập: ${result.added} tài khoản mới, giữ bản mới hơn cho ${result.total - result.added} tài khoản trùng`);
-  } catch {
-    toast('File không hợp lệ', 'err');
-  }
-}
-
+/** Settings live on the extension's options page (options.html, opened in a tab). */
 function openSettings() {
-  openSettingsModal(state.settings, {
-    isPopup: !isTabView,
-    onOpenTab: () => openFullTab('#settings'),
-    onExport: () => { downloadBackup(state); toast('Đã xuất file sao lưu'); },
-    onImport: importBackup,
-    onSave: async (settings) => {
-      await commit((current) => applySettings(current, settings));
-      toast('Đã lưu cài đặt');
-    },
-  });
+  if (isExtension) {
+    chrome.runtime.openOptionsPage();
+    if (!isTabView) window.close(); // the popup would be hidden behind the new tab anyway
+  } else window.open('options.html', '_blank');
 }
 
 // --- static controls -------------------------------------------------------
@@ -202,7 +183,6 @@ takePendingScan().then((pending) => {
   if (pending?.error) toast(pending.error, 'err');
   else if (pending) handlers.onAdd({ initialImages: pending.images });
 });
-if (location.hash === '#settings') openSettings();
 if (location.hash === '#scan-file') handlers.onAdd({ autoScan: 'file' });
 if (location.hash === '#scan-camera') handlers.onAdd({ autoScan: 'camera' });
 if (location.hash) history.replaceState(null, '', location.pathname + location.search);

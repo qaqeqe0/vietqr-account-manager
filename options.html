@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cài đặt · Sổ tài khoản QR chuyển khoản</title>
+  <link rel="stylesheet" href="styles/popup.css">
+  <link rel="stylesheet" href="styles/dialogs.css">
+  <link rel="stylesheet" href="styles/form-controls.css">
+  <link rel="stylesheet" href="styles/options.css">
+</head>
+<body class="tab-view options-view">
+  <!-- Extension options page (manifest "options_ui"). The form is built by src/settings-page.js. -->
+  <div class="options-page">
+    <header class="brand options-head">
+      <img src="icons/icon-48.png" alt="" width="36" height="36">
+      <div>
+        <h1>Cài đặt</h1>
+        <span class="muted">Sổ tài khoản QR chuyển khoản</span>
+      </div>
+    </header>
+    <main id="settingsRoot" class="options-card" aria-busy="true"><p class="muted">Đang tải…</p></main>
+  </div>
+  <div class="options-bar" role="region" aria-label="Lưu cài đặt">
+    <div class="options-bar-inner">
+      <span id="settingsDirty" class="muted" hidden>Có thay đổi chưa lưu</span>
+      <button id="btnResetSettings" class="btn btn-ghost" type="button" disabled>Bỏ thay đổi</button>
+      <button id="btnSaveSettings" class="btn btn-primary" type="button" disabled title="Lưu (Ctrl/⌘ + S)">Lưu cài đặt</button>
+    </div>
+  </div>
+
+  <div id="modalRoot"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="src/settings-page.js"></script>
+</body>
+</html>

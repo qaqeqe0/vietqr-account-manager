@@ -1,0 +1,9 @@
+/* Options page (options.html): one centred card with the settings form and a Save bar pinned to the bottom. */
+.options-page { max-width: 680px; margin: 0 auto; padding: 24px 16px 96px; }
+.options-head { margin-bottom: 16px; }
+.options-head h1 { font-size: 20px; }
+.options-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
+.options-bar { position: fixed; inset: auto 0 0 0; background: var(--surface); border-top: 1px solid var(--border); box-shadow: 0 -4px 14px rgba(21, 19, 43, .06); }
+.options-bar-inner { max-width: 680px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.options-bar-inner .muted { margin-right: auto; }
+.options-bar .btn:disabled { opacity: .5; cursor: default; filter: none; }

@@ -1,7 +1,8 @@
-// Settings dialog: your name for {toi}, editable groups, content templates, backup/restore,
-// Google Sheet / Drive sync and VietQR.io name lookup.
+// Settings form shown on the extension's options page: your name for {toi}, editable
+// groups, content templates, QR dialog style, backup/restore, Google Sheet / Drive sync
+// and VietQR.io name lookup.
 import { DEFAULT_GROUPS, DEFAULT_TEMPLATES } from './storage.js';
-import { el, openModal, toast } from './ui-helpers.js';
+import { el } from './ui-helpers.js';
 import { normalizeAccountName } from './text-utils.js';
 import { createSyncSettingsPanel } from './sync-settings-panel.js';
 import { VIETQR_IMAGE_ORIGINS } from './qr-print-card.js';
@@ -19,14 +20,17 @@ function aboutLine() {
 const lines = (text) => [...new Set(String(text).split('\n').map((s) => s.trim()).filter(Boolean))];
 
 /**
+ * Builds the settings form for `settings`.
  * @param {object} settings
- * @param {{onSave: (settings) => void, onExport: () => void, onImport: (file: File) => void,
- *          isPopup: boolean, onOpenTab: () => void}} handlers
+ * @param {{onExport: () => void, onImport: (file: File) => void}} handlers
+ * @returns {{content: HTMLElement, collectChanges: () => ({changes: object} | {error: string})}}
+ *   collectChanges returns only the fields edited here, so values changed meanwhile by an
+ *   import or by sync are not overwritten with stale lists.
  */
-export function openSettingsModal(settings, { onSave, onExport, onImport, isPopup, onOpenTab }) {
+export function createSettingsForm(settings, { onExport, onImport }) {
   const myName = el('input', { class: 'field-input', placeholder: 'VD: NGUYEN VAN A', value: settings.myName });
-  const groups = el('textarea', { class: 'field-input', rows: '5' }, settings.groups.join('\n'));
-  const templates = el('textarea', { class: 'field-input', rows: '6' }, settings.templates.join('\n'));
+  const groups = el('textarea', { class: 'field-input', rows: '6' }, settings.groups.join('\n'));
+  const templates = el('textarea', { class: 'field-input', rows: '7' }, settings.templates.join('\n'));
   const qrLayout = el('select', { class: 'field-input' },
     el('option', { value: 'card', selected: settings.qrLayout !== 'classic' }, 'Thẻ VietQR (mặc định) — thẻ in có logo, khung số TK, nút “Tải mã QR”'),
     el('option', { value: 'classic', selected: settings.qrLayout === 'classic' }, 'Cổ điển — mã QR, ô số tiền/nội dung, các nút bên dưới'));
@@ -38,7 +42,7 @@ export function openSettingsModal(settings, { onSave, onExport, onImport, isPopu
   // Downloading the official card needs access to img.vietqr.io; asked while the click
   // still counts. Without it the card is still shown, and downloads use the offline card.
   const askImagePermission = () => {
-    if (isPopup || typeof chrome === 'undefined' || !chrome.permissions) return;
+    if (typeof chrome === 'undefined' || !chrome.permissions) return;
     if (qrLayout.value === 'card' && vietqrImage.checked) chrome.permissions.request({ origins: VIETQR_IMAGE_ORIGINS }).catch(() => {});
   };
   qrLayout.addEventListener('change', askImagePermission);
@@ -51,7 +55,8 @@ export function openSettingsModal(settings, { onSave, onExport, onImport, isPopu
   });
 
   const resetLink = (target, values) => el('button', {
-    type: 'button', class: 'link-btn', onclick: () => { target.value = values.join('\n'); },
+    type: 'button', class: 'link-btn',
+    onclick: () => { target.value = values.join('\n'); target.dispatchEvent(new Event('input', { bubbles: true })); },
   }, 'Khôi phục mặc định');
 
   const syncSlot = el('div', { class: 'sync-slot' });
@@ -70,45 +75,30 @@ export function openSettingsModal(settings, { onSave, onExport, onImport, isPopu
       el('span', { class: 'form-label' }, 'Sao lưu dữ liệu'),
       el('div', { class: 'backup-actions' },
         el('button', { type: 'button', class: 'btn btn-ghost', onclick: onExport }, 'Xuất file JSON'),
-        el('button', {
-          type: 'button', class: 'btn btn-ghost',
-          // The file picker closes extension popups, so import runs in a full tab.
-          onclick: () => (isPopup ? onOpenTab() : fileInput.click()),
-        }, isPopup ? 'Nhập file (mở tab)' : 'Nhập file JSON'),
+        el('button', { type: 'button', class: 'btn btn-ghost', onclick: () => fileInput.click() }, 'Nhập file JSON'),
         fileInput)),
     syncSlot,
     el('p', { class: 'field-hint' }, 'Dữ liệu lưu trong trình duyệt này và chỉ gửi tới Google Sheet / Drive / VietQR.io khi bạn bật ở trên. Mã QR được tạo offline (trừ khi dùng ảnh thẻ từ img.vietqr.io).'),
     aboutLine(),
   );
-  createSyncSettingsPanel({ isPopup, onOpenTab })
+  // Sync settings save on their own as they change (device-only config).
+  createSyncSettingsPanel({ isPopup: false })
     .then((panel) => syncSlot.replaceChildren(panel))
     .catch((error) => syncSlot.replaceChildren(el('p', { class: 'field-hint warn' }, `Không mở được phần đồng bộ: ${error.message}`)));
 
-  const modal = openModal({
-    title: 'Cài đặt',
-    content,
-    footer: [
-      el('button', { type: 'button', class: 'btn btn-ghost', onclick: () => modal.close() }, 'Huỷ'),
-      el('button', {
-        type: 'button', class: 'btn btn-primary',
-        onclick: () => {
-          const groupList = lines(groups.value);
-          if (!groupList.length) { toast('Cần ít nhất một nhóm', 'err'); return; }
-          // Send only what was edited here, so groups or templates changed meanwhile
-          // (e.g. by an import in this tab or by sync) are not overwritten with stale lists.
-          const changes = {};
-          const name = normalizeAccountName(myName.value);
-          if (name !== settings.myName) changes.myName = name;
-          if (qrLayout.value !== (settings.qrLayout || 'card')) changes.qrLayout = qrLayout.value;
-          const source = vietqrImage.checked ? 'vietqr' : 'offline';
-          if (source !== (settings.qrImageSource || 'vietqr')) changes.qrImageSource = source;
-          if (groupList.join('\n') !== settings.groups.join('\n')) changes.groups = groupList;
-          const templateList = lines(templates.value);
-          if (templateList.join('\n') !== settings.templates.join('\n')) changes.templates = templateList;
-          onSave(changes);
-          modal.close();
-        },
-      }, 'Lưu'),
-    ],
-  });
+  const collectChanges = () => {
+    const groupList = lines(groups.value);
+    if (!groupList.length) return { error: 'Cần ít nhất một nhóm' };
+    const changes = {};
+    const name = normalizeAccountName(myName.value);
+    if (name !== settings.myName) changes.myName = name;
+    if (qrLayout.value !== (settings.qrLayout || 'card')) changes.qrLayout = qrLayout.value;
+    const source = vietqrImage.checked ? 'vietqr' : 'offline';
+    if (source !== (settings.qrImageSource || 'vietqr')) changes.qrImageSource = source;
+    if (groupList.join('\n') !== settings.groups.join('\n')) changes.groups = groupList;
+    const templateList = lines(templates.value);
+    if (templateList.join('\n') !== settings.templates.join('\n')) changes.templates = templateList;
+    return { changes };
+  };
+  return { content, collectChanges };
 }
