@@ -62,3 +62,7 @@ Thư mục `docs/store/` chứa hồ sơ đăng store: [chrome-web-store-listing
 ## Lưu ý về dữ liệu
 
 Bản Vite và bản thường là hai extension khác nhau trong Chrome nên có kho dữ liệu riêng. Để chuyển dữ liệu, dùng "Xuất file JSON" ở bản này rồi "Nhập file JSON" ở bản kia, hoặc bật cùng một Google Sheet để đồng bộ.
+
+## Giấy phép
+
+Mã nguồn phát hành theo giấy phép [MIT](LICENSE). Các thư viện đi kèm giữ giấy phép riêng: QR Code Generator của Kazuhiko Arase (MIT), jsQR và Tesseract.js cùng dữ liệu tiếng Việt (Apache-2.0).
