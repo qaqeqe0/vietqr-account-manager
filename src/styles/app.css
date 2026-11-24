@@ -50,6 +50,19 @@
   .chip.active { @apply bg-blue-600 border-blue-600 text-white; }
   .chip-count { @apply text-xs opacity-70 font-semibold; }
 
+  /* Filter row: ‹ chips › [search]. Arrows appear only when the chips overflow; the chip strip
+     fades at an edge that has more chips behind it. */
+  .filter-bar { @apply flex items-center gap-1.5; }
+  .filter-bar #groupChips { @apply flex-1 min-w-0 scroll-smooth; }
+  .filter-bar #groupChips.more-left { mask-image: linear-gradient(to right, transparent, #000 24px); }
+  .filter-bar #groupChips.more-right { mask-image: linear-gradient(to left, transparent, #000 24px); }
+  .filter-bar #groupChips.more-left.more-right { mask-image: linear-gradient(to right, transparent, #000 24px, #000 calc(100% - 24px), transparent); }
+  .chip-arrow { @apply shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full bg-white border border-slate-200 text-[11px] text-slate-500 shadow-sm hover:text-blue-700 hover:border-blue-300 transition-colors; }
+  .search-toggle { @apply shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors; }
+  .search-toggle[aria-expanded="true"] { @apply bg-blue-50 text-blue-600; }
+  .search-close { @apply hidden; }
+  body.tab-view .search-toggle { @apply hidden; }
+
   /* Navbar "Thêm tài khoản": full label on wide tab view, icon-only "+" in the popup. */
   .nav-add { @apply hidden md:inline-flex; }
   .nav-add-label { @apply hidden md:inline; }
@@ -73,7 +86,13 @@
   body:not(.tab-view) .list-title { @apply flex items-baseline gap-2; }
   body:not(.tab-view) .list-title #accountCount { @apply mt-0 text-xs shrink-0; }
   body:not(.tab-view) .list-title .sync-badge { @apply mt-0; }
-  body:not(.tab-view) #groupChips { @apply mb-2; }
+  body:not(.tab-view) .filter-bar { @apply mb-2; }
+  /* Popup search: closed by default; opened by the search button, "/" or typing. */
+  body:not(.tab-view):not(.search-open) #searchBox { @apply hidden; }
+  body:not(.tab-view) #searchInput { @apply pr-9; }
+  body:not(.tab-view) .search-close { @apply absolute inset-y-0 right-1 my-auto inline-flex items-center justify-center w-7 h-7 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100; }
+  /* The native clear "x" would sit next to our close button; the close button clears too. */
+  body:not(.tab-view) #searchInput::-webkit-search-cancel-button { display: none; }
   body:not(.tab-view) .chip { @apply py-1 px-2.5 text-xs; }
 
   /* Popup, once the list is scrolled (main.js sets body.is-scrolled): the navbar shrinks to
