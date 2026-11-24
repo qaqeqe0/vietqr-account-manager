@@ -31,15 +31,15 @@ TẠO MÃ VIETQR NHANH
 • Thẻ VietQR đẹp như bản in, tải về ảnh PNG hoặc sao chép ảnh để dán vào tin nhắn.
 
 QUẢN LÝ SỔ TÀI KHOẢN
-• Hơn 50 ngân hàng và ví (Vietcombank, VietinBank, BIDV, Agribank, MB, Techcombank, ACB, MoMo…), có logo.
-• Tìm kiếm không dấu theo tên, số tài khoản, ngân hàng (gõ vcb, mb, vietin…), ghi chú.
-• Lọc theo nhóm: Khách hàng, Bạn bè, Người thân, Đối tác, Nhà cung cấp… và nhóm tự tạo; đánh dấu yêu thích.
+• Hỗ trợ hơn 50 ngân hàng và ví điện tử tại Việt Nam, kèm logo để nhận ra nhanh.
+• Tìm kiếm không dấu theo tên, số tài khoản, ngân hàng hoặc ghi chú; gõ tên viết tắt của ngân hàng cũng tìm được.
+• Chia tài khoản theo nhóm (khách hàng, người thân…) và tự tạo nhóm riêng; đánh dấu yêu thích để luôn ở đầu danh sách.
 
 THÊM TÀI KHOẢN BẰNG MÃ QR
 • Chuột phải trên trang web → "Quét mã VietQR trên trang này".
 • Dán, kéo thả ảnh chụp mã QR, chọn ảnh hoặc dùng camera.
 • Tự đọc tên chủ tài khoản in cạnh mã QR (chạy offline trên máy).
-• Dán đoạn tin nhắn "Vietcombank 0123456789 NGUYEN VAN A" để tự điền.
+• Dán đoạn tin nhắn có tên ngân hàng, số tài khoản và tên chủ tài khoản để tự điền.
 
 SAO LƯU VÀ ĐỒNG BỘ (TUỲ CHỌN)
 • Đồng bộ với Google Sheet của bạn: dán đoạn Apps Script có sẵn trong Cài đặt vào Google Sheet, triển khai thành web app rồi dán link vào tiện ích. Dữ liệu nằm trong Sheet của chính bạn.
@@ -132,6 +132,9 @@ No account or login is needed. Click the toolbar icon, press "Thêm tài khoản
 - **Pricing:** miễn phí.
 
 ## 7. Rủi ro khi duyệt và cách xử lý
+
+> **24/11/2026 — bản 1.2.5 bị từ chối vì "Keyword Spam" (Yellow Argon):** mô tả liệt kê tên các ngân hàng. Đã bỏ danh sách ngân hàng, danh sách nhóm và ví dụ từ khoá khỏi mô tả. Không liệt kê thương hiệu hay từ khoá thành chuỗi trong mô tả nữa.
+
 
 | Rủi ro | Cách xử lý |
 |---|---|
