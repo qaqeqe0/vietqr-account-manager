@@ -1,4 +1,4 @@
-# Sổ tài khoản VietQR — bản Tailwind (Vite)
+# Sổ tài khoản QR chuyển khoản — bản Tailwind (Vite)
 
 Chrome extension quản lý số tài khoản ngân hàng và tạo mã VietQR để nhận chuyển khoản. Đây là bản giao diện Tailwind (font Inter, icon Font Awesome, màu xanh `blue-600`) build bằng Vite.
 
@@ -54,6 +54,10 @@ Mô tả đầy đủ từng tính năng, quyền của extension và cấu trú
 - `src/account-row-compact.js` — dòng tài khoản thu gọn trong popup.
 - `src/styles/app.css` — toàn bộ style Tailwind, kể cả dropdown, checkbox, thanh cuộn.
 - `vite.config.js` — chuyển các import của bản thường sang file hiển thị ở đây, và chép `lib/`, `icons/`, `google-apps-script/`, `manifest.json` từ bản thường vào `dist/`.
+
+## Hồ sơ Chrome Web Store
+
+Thư mục `docs/store/` chứa hồ sơ đăng store: [chrome-web-store-listing.md](docs/store/chrome-web-store-listing.md) (mô tả, giải trình quyền, khai báo dữ liệu, ghi chú cho người duyệt), [privacy-policy.html](docs/store/privacy-policy.html), ảnh chụp 1280×800 trong `docs/store/screenshots/` và ảnh quảng bá `promo-tile-440x280.png` (dựng từ `promo-tile.html`).
 
 ## Lưu ý về dữ liệu
 

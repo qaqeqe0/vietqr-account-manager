@@ -1,8 +1,8 @@
 {
   "name": "vietqr-account-manager-vite",
   "private": true,
-  "version": "1.2.3",
-  "description": "Sổ tài khoản VietQR — bản giao diện Tailwind build bằng Vite, dùng chung logic với vietqr-account-manager-extension",
+  "version": "1.2.4",
+  "description": "Sổ tài khoản QR chuyển khoản — bản giao diện Tailwind build bằng Vite, dùng chung logic với vietqr-account-manager-extension",
   "type": "module",
   "scripts": {
     "dev": "vite",

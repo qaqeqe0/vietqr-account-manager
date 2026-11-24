@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chính sách quyền riêng tư · Sổ tài khoản QR chuyển khoản</title>
+  <style>
+    :root { color-scheme: light; --text: #0f172a; --muted: #475569; --line: #e2e8f0; --accent: #2563eb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f8fafc; color: var(--text); font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+    main { max-width: 760px; margin: 0 auto; padding: 40px 20px 64px; }
+    h1 { font-size: 28px; line-height: 1.25; margin: 0 0 4px; }
+    h2 { font-size: 20px; margin: 36px 0 8px; padding-top: 16px; border-top: 1px solid var(--line); }
+    h3 { font-size: 16px; margin: 20px 0 4px; }
+    p, li { color: var(--muted); }
+    strong { color: var(--text); }
+    .meta { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
+    .lang { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--accent); text-transform: uppercase; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0; }
+    th, td { text-align: left; vertical-align: top; padding: 8px 10px; border: 1px solid var(--line); }
+    th { background: #f1f5f9; color: var(--text); }
+    td { color: var(--muted); background: #fff; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Chính sách quyền riêng tư</h1>
+  <p class="meta">Sổ tài khoản QR chuyển khoản (Chrome extension) · Cập nhật: 24/11/2026 · Áp dụng từ phiên bản 1.2.4</p>
+
+  <span class="lang">Tiếng Việt</span>
+
+  <h3>Tóm tắt</h3>
+  <p>Tiện ích lưu sổ tài khoản ngân hàng của bạn <strong>ngay trên trình duyệt</strong>. Tác giả <strong>không có máy chủ</strong>, không thu thập, không bán và không chia sẻ dữ liệu của bạn, không dùng quảng cáo hay công cụ thống kê. Dữ liệu chỉ rời khỏi máy khi bạn dùng các tính năng kết nối liệt kê dưới đây.</p>
+
+  <h3>Dữ liệu tiện ích xử lý</h3>
+  <ul>
+    <li><strong>Sổ tài khoản:</strong> ngân hàng, số tài khoản, tên chủ tài khoản, tên gợi nhớ, nhóm, ghi chú, số tiền và nội dung đã dùng gần đây.</li>
+    <li><strong>Cài đặt:</strong> tên của bạn (để điền nội dung chuyển khoản), danh sách nhóm, mẫu nội dung, kiểu hộp thoại mã QR.</li>
+    <li><strong>Cấu hình đồng bộ do bạn nhập:</strong> địa chỉ Apps Script và mã bí mật, Google Sheet đích, OAuth Client ID của Google Drive, Client ID và API key của VietQR.io.</li>
+  </ul>
+  <p>Tất cả được lưu trong <code>chrome.storage.local</code> trên máy của bạn. Gỡ tiện ích sẽ xoá các dữ liệu này.</p>
+
+  <h3>Khi nào dữ liệu được gửi đi</h3>
+  <table>
+    <tr><th>Tính năng</th><th>Gửi tới</th><th>Dữ liệu</th><th>Khi nào</th></tr>
+    <tr><td>Ảnh thẻ VietQR chính thức</td><td>img.vietqr.io</td><td>Mã ngân hàng (BIN), số tài khoản, tên chủ tài khoản, số tiền, nội dung</td><td>Khi mở mã QR, nếu bật "Dùng ảnh thẻ chính thức từ img.vietqr.io" trong Cài đặt (bật sẵn; tắt thì thẻ được vẽ hoàn toàn trên máy)</td></tr>
+    <tr><td>Logo ngân hàng</td><td>api.vietqr.io</td><td>Chỉ mã ngân hàng, không có dữ liệu cá nhân</td><td>Khi hiển thị danh sách, nếu cho phép ảnh từ VietQR.io</td></tr>
+    <tr><td>Tra tên chủ tài khoản</td><td>api.vietqr.io</td><td>Mã ngân hàng và số tài khoản, kèm API key của bạn</td><td>Chỉ khi bạn nhập API key VietQR.io và bấm "Tra tên" hoặc quét mã QR không có tên</td></tr>
+    <tr><td>Đồng bộ Google Sheet</td><td>Apps Script do chính bạn triển khai (script.google.com)</td><td>Toàn bộ sổ tài khoản và cài đặt</td><td>Chỉ khi bạn bật; dữ liệu nằm trong Google Sheet của bạn</td></tr>
+    <tr><td>Sao lưu Google Drive</td><td>Google Drive của bạn (www.googleapis.com)</td><td>Toàn bộ sổ tài khoản và cài đặt, trong file <code>so-tai-khoan-vietqr.json</code></td><td>Chỉ khi bạn bật và đăng nhập Google; quyền <code>drive.file</code> chỉ cho phép đụng tới file do tiện ích tạo</td></tr>
+  </table>
+  <p>Các quyền truy cập tên miền trên đều là <strong>quyền tuỳ chọn</strong>: Chrome chỉ hỏi bạn khi bạn bật tính năng tương ứng.</p>
+
+  <h3>Xử lý ngay trên máy</h3>
+  <ul>
+    <li><strong>Quét mã QR trên trang web</strong> (quyền <code>activeTab</code>): tiện ích chụp tab đang xem khi bạn bấm lệnh quét, đọc mã QR và chữ trên ảnh ngay trên máy. Ảnh không được lưu và không được gửi đi.</li>
+    <li><strong>Ảnh và camera:</strong> ảnh bạn chọn, dán hoặc kéo thả, và hình từ camera chỉ được xử lý trên máy để đọc mã QR và tên chủ tài khoản (OCR chạy offline).</li>
+    <li><strong>Mã VietQR</strong> được tạo offline theo chuẩn NAPAS/EMVCo.</li>
+  </ul>
+
+  <h3>Nút "Mời tác giả một ly cà phê"</h3>
+  <p>Nút này chỉ mở mã VietQR ví MoMo của tác giả để bạn tự nguyện ủng hộ. Tiện ích không biết bạn có chuyển tiền hay không và không ghi lại gì.</p>
+
+  <h3>Quyền của bạn</h3>
+  <p>Bạn có thể xem, sửa, xuất (file JSON) và xoá dữ liệu bất kỳ lúc nào trong tiện ích; tắt đồng bộ trong Cài đặt; thu hồi quyền Google tại <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. Dữ liệu đã đồng bộ nằm trong Google Sheet hoặc Google Drive của bạn và do bạn quản lý.</p>
+
+  <h3>Liên hệ</h3>
+  <p>Mọi câu hỏi về quyền riêng tư, vui lòng gửi qua trang hỗ trợ của tiện ích trên Chrome Web Store.</p>
+
+  <h2><span class="lang">English</span><br>Privacy Policy</h2>
+
+  <h3>Summary</h3>
+  <p>The extension keeps your bank account book <strong>in your browser</strong>. The author runs <strong>no server</strong> and does not collect, sell or share your data, and uses no ads or analytics. Data leaves your device only when you use the connected features listed below.</p>
+
+  <h3>Data the extension handles</h3>
+  <ul>
+    <li><strong>Account book:</strong> bank, account number, account holder name, nickname, group, note, recently used amounts and transfer messages.</li>
+    <li><strong>Settings:</strong> your name (used to pre-fill the transfer message), groups, message templates, QR dialog style.</li>
+    <li><strong>Sync configuration you enter:</strong> Apps Script URL and secret, target Google Sheet, Google Drive OAuth client ID, VietQR.io client ID and API key.</li>
+  </ul>
+  <p>All of it is stored in <code>chrome.storage.local</code> on your device and is removed when you uninstall the extension.</p>
+
+  <h3>When data is sent</h3>
+  <table>
+    <tr><th>Feature</th><th>Sent to</th><th>Data</th><th>When</th></tr>
+    <tr><td>Official VietQR card image</td><td>img.vietqr.io</td><td>Bank BIN, account number, holder name, amount, message</td><td>When a QR is opened, if "Use the official card image from img.vietqr.io" is on in Settings (on by default; when off, the card is drawn entirely on your device)</td></tr>
+    <tr><td>Bank logos</td><td>api.vietqr.io</td><td>Bank code only, no personal data</td><td>When the list is shown, if VietQR.io images are allowed</td></tr>
+    <tr><td>Account holder lookup</td><td>api.vietqr.io</td><td>Bank BIN and account number, with your own API key</td><td>Only if you enter a VietQR.io API key and press "Tra tên" (look up) or scan a QR without a name</td></tr>
+    <tr><td>Google Sheet sync</td><td>Your own Apps Script deployment (script.google.com)</td><td>The whole account book and settings</td><td>Only when you turn it on; the data lives in your Google Sheet</td></tr>
+    <tr><td>Google Drive backup</td><td>Your Google Drive (www.googleapis.com)</td><td>The whole account book and settings, in <code>so-tai-khoan-vietqr.json</code></td><td>Only when you turn it on and sign in; the <code>drive.file</code> scope only reaches files the extension created</td></tr>
+  </table>
+  <p>All of these hosts are <strong>optional permissions</strong>: Chrome asks you only when you turn the matching feature on.</p>
+
+  <h3>Processed on your device</h3>
+  <ul>
+    <li><strong>Scanning a QR on a web page</strong> (<code>activeTab</code>): when you choose the scan command, the extension captures the visible tab and reads the QR code and text locally. The image is neither stored nor sent.</li>
+    <li><strong>Images and camera:</strong> images you pick, paste or drop, and camera frames, are processed only on your device (offline OCR).</li>
+    <li><strong>VietQR codes</strong> are generated offline following the NAPAS/EMVCo standard.</li>
+  </ul>
+
+  <h3>"Buy the author a coffee" button</h3>
+  <p>It only opens the author's MoMo VietQR for voluntary support. The extension does not know whether you pay and records nothing.</p>
+
+  <h3>Your choices</h3>
+  <p>You can view, edit, export (JSON) and delete your data at any time in the extension, turn sync off in Settings, and revoke Google access at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. Synced data stays in your own Google Sheet or Drive under your control.</p>
+
+  <h3>Contact</h3>
+  <p>For privacy questions, please use the extension's support page on the Chrome Web Store.</p>
+</main>
+</body>
+</html>
