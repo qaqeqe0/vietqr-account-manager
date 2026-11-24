@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Sổ tài khoản QR chuyển khoản",
   "short_name": "Sổ TK QR",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Quản lý số tài khoản ngân hàng, tạo mã VietQR chuyển khoản offline với gợi ý số tiền và nội dung, tìm kiếm và lọc theo nhóm.",
   "action": {
     "default_popup": "popup.html",
