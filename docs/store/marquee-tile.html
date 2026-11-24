@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Marquee tile 1400x560</title>
+<!-- Source of marquee-1400x560.png (Chrome Web Store marquee promo tile). Rendered at 1400x560.
+     The product shot is screenshots/02-vietqr-card-1280x800.png (sample data, not real people). -->
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1400px; height: 560px; overflow: hidden; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: #fff;
+    background: linear-gradient(120deg, #1d4ed8 0%, #2563eb 50%, #0ea5e9 100%); position: relative; }
+  .glow { position: absolute; border-radius: 50%; background: rgba(255,255,255,.10); }
+  .g1 { width: 520px; height: 520px; left: -180px; bottom: -260px; }
+  .g2 { width: 380px; height: 380px; left: 520px; top: -220px; background: rgba(255,255,255,.07); }
+  .copy { position: absolute; left: 80px; top: 0; bottom: 0; width: 560px; display: flex; flex-direction: column; justify-content: center; gap: 28px; }
+  .head { display: flex; align-items: center; gap: 20px; }
+  .icon { width: 92px; height: 92px; border-radius: 22px; background: #fff; padding: 8px; box-shadow: 0 10px 28px rgba(15,23,42,.28); flex: none; }
+  .icon img { width: 100%; height: 100%; border-radius: 14px; }
+  h1 { font-size: 46px; line-height: 1.08; font-weight: 800; letter-spacing: -.015em; }
+  .tag { font-size: 18px; opacity: .92; }
+  ul { list-style: none; padding: 0; display: grid; gap: 14px; }
+  li { font-size: 21px; font-weight: 600; display: flex; align-items: center; gap: 14px; }
+  li span { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,.2); font-size: 18px; flex: none; }
+  .shot { position: absolute; right: 60px; top: 48px; width: 640px; height: 464px; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 24px 60px rgba(15,23,42,.35); border: 6px solid rgba(255,255,255,.9); background: #fff; }
+  .shot img { width: 100%; height: 100%; object-fit: cover; object-position: center 0; display: block; }
+</style>
+</head>
+<body>
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <div class="copy">
+    <div class="head">
+      <div class="icon"><img src="data:image/png;base64,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" alt=""></div>
+      <div>
+        <h1>Sổ tài khoản<br>QR chuyển khoản</h1>
+        <div class="tag">Tiện ích Chrome miễn phí · hỗ trợ mã VietQR</div>
+      </div>
+    </div>
+    <ul>
+      <li><span>⚡</span>Tạo mã chuyển khoản trong 1 cú bấm</li>
+      <li><span>🔎</span>Tìm nhanh, lọc theo nhóm khách hàng</li>
+      <li><span>📷</span>Quét mã QR để thêm tài khoản</li>
+      <li><span>🔒</span>Dữ liệu lưu trên máy của bạn</li>
+    </ul>
+  </div>
+  <div class="shot"><img src="screenshots/02-vietqr-card-1280x800.png" alt=""></div>
+</body>
+</html>

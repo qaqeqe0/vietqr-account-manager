@@ -5,7 +5,7 @@ Nội dung để dán vào [Chrome Web Store Developer Dashboard](https://chrome
 ## 1. Trước khi nộp
 
 - [ ] Tài khoản nhà phát triển Chrome Web Store (phí một lần 5 USD), bật xác minh 2 bước cho tài khoản Google.
-- [x] Chính sách quyền riêng tư đã đăng tại https://qaqeqe0.github.io/so-tai-khoan-qr-privacy/ (repo công khai `qaqeqe0/so-tai-khoan-qr-privacy`, GitHub Pages). Khi sửa `privacy-policy.html` thì chép sang `index.html` của repo đó.
+- [x] Chính sách quyền riêng tư đã đăng tại https://qaqeqe0.github.io/so-tai-khoan-qr/privacy/ (repo công khai `qaqeqe0/so-tai-khoan-qr`, GitHub Pages). Khi sửa `privacy-policy.html` thì chép sang `privacy/index.html` của repo đó.
 - [ ] Cài file zip lên Chrome thật (Load unpacked thư mục `dist`), thử: thêm tài khoản, quét QR, mở và tải mã QR, đồng bộ, nút cà phê.
 - [ ] Chuyển thử một khoản nhỏ qua mã QR MoMo của nút cà phê.
 
@@ -63,13 +63,25 @@ Phím tắt mở nhanh: Alt+Shift+Q.
 
 | Mục | Kích thước | File |
 |---|---|---|
-| Icon cửa hàng | 128×128 | `icons/icon-128.png` (trong zip) |
+| Biểu tượng cửa hàng | 128×128, hình 96×96 chừa viền trong suốt 16px theo hướng dẫn của Google | `store-icon-128.png` |
 | Ảnh chụp 1 — danh sách tài khoản | 1280×800 | `screenshots/01-account-list-1280x800.png` |
 | Ảnh chụp 2 — hộp thoại thẻ VietQR | 1280×800 | `screenshots/02-vietqr-card-1280x800.png` |
 | Ảnh chụp 3 — thêm tài khoản, chọn ngân hàng | 1280×800 | `screenshots/03-add-account-1280x800.png` |
-| Ảnh quảng bá nhỏ | 440×280 | `promo-tile-440x280.png` |
+| Ô quảng cáo nhỏ | 440×280 | `promo-tile-440x280.png` |
+| Ô quảng cáo marquee (tuỳ chọn) | 1400×560 | `marquee-1400x560.png` (dựng từ `marquee-tile.html`) |
+| Video quảng cáo (tuỳ chọn) | URL YouTube | Để trống |
 
-Dữ liệu trong ảnh chụp là dữ liệu mẫu, không phải người thật.
+Dữ liệu trong ảnh chụp là dữ liệu mẫu, không phải người thật. Ảnh chụp và ô quảng cáo đều là PNG 24 bit không có kênh alpha, đúng yêu cầu của store.
+
+**Các trường bổ sung:**
+
+| Ô | Giá trị |
+|---|---|
+| URL chính thức | Để trống. Ô này chỉ nhận trang web đã xác minh quyền sở hữu trong Google Search Console; `github.io` không xác minh được. |
+| URL trang chủ | https://qaqeqe0.github.io/so-tai-khoan-qr/ |
+| URL hỗ trợ | https://github.com/qaqeqe0/so-tai-khoan-qr/issues |
+
+Trang chủ, chính sách và hỗ trợ nằm trong repo công khai `qaqeqe0/so-tai-khoan-qr` (GitHub Pages). Sau khi tiện ích lên store, thay dòng "Sắp có trên Chrome Web Store" trong `index.html` của repo đó bằng liên kết tới trang store.
 
 ## 4. Privacy practices (tab Privacy)
 
@@ -105,7 +117,7 @@ Dữ liệu trong ảnh chụp là dữ liệu mẫu, không phải người th�
 
 Đánh dấu cả ba cam kết: không bán hoặc chuyển dữ liệu cho bên thứ ba ngoài các trường hợp được phép; không dùng cho mục đích không liên quan đến chức năng chính; không dùng để đánh giá tín dụng hoặc cho vay.
 
-**Privacy policy URL:** https://qaqeqe0.github.io/so-tai-khoan-qr-privacy/
+**Privacy policy URL:** https://qaqeqe0.github.io/so-tai-khoan-qr/privacy/
 
 ## 5. Ghi chú cho người duyệt (Test instructions)
 

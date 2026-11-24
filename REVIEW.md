@@ -34,5 +34,5 @@ Màn cần chụp: danh sách, hộp thoại mã QR, form thêm tài khoản (da
 
 ## Bề mặt công khai (AX)
 
-- Chính sách quyền riêng tư: `https://qaqeqe0.github.io/so-tai-khoan-qr-privacy/` (repo `qaqeqe0/so-tai-khoan-qr-privacy`, file `index.html` chép từ `docs/store/privacy-policy.html`). Phải trả về 200 cho OAI-SearchBot và Claude-SearchBot.
+- Chính sách quyền riêng tư: `https://qaqeqe0.github.io/so-tai-khoan-qr/privacy/` (repo `qaqeqe0/so-tai-khoan-qr`, file `privacy/index.html` chép từ `docs/store/privacy-policy.html`). Phải trả về 200 cho OAI-SearchBot và Claude-SearchBot.
 - Hồ sơ Chrome Web Store: `docs/store/chrome-web-store-listing.md`; ảnh store tạo lại khi giao diện đổi.
