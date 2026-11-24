@@ -83,3 +83,7 @@ npm run dev     # xem thử tại http://localhost:5188/popup.html (dữ liệu 
 ```
 
 Lưu ý: hai bản là hai extension khác nhau trong Chrome nên có kho dữ liệu riêng; dùng "Xuất file JSON" ở bản này rồi "Nhập file JSON" ở bản kia (hoặc cùng bật đồng bộ Google Sheet) để chuyển dữ liệu.
+
+## Giấy phép
+
+Mã nguồn phát hành theo giấy phép [MIT](LICENSE). Các thư viện đi kèm giữ giấy phép riêng: QR Code Generator của Kazuhiko Arase (MIT), jsQR và Tesseract.js cùng dữ liệu tiếng Việt (Apache-2.0).
